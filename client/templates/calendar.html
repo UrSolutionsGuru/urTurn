@@ -1,0 +1,18 @@
+<template name="calendar">
+  <div class="container">
+    <button class="gotoMonth">Month</button>
+    <button class="gotoDay">Day</button>
+    {{> fullcalendar
+        class="mainCalendar"
+        defaultView='month'
+
+        defaultDate=defaultDate
+        events=events
+        eventClick=onEventClicked
+        dayClick=dayClick
+        eventDrop=eventDrop
+        eventClick=eventClick
+
+    }}
+  </div>
+</template>

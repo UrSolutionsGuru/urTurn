@@ -3,7 +3,7 @@
  */
 // helper function that returns all available urturn
 Template.urturnForm.helpers({
-  urturns:function(){
-    return Urturns.find({});
+  getSlots:function(){
+    return Slots.find({});
   }
 });
