@@ -30,6 +30,8 @@ if (Meteor.isClient) {
 
       );
 
+      $('#FredCalendar').fullCalendar( 'next' );
+      $('#FredCalendar').fullCalendar( 'prev' );
 
     }
   });
@@ -39,45 +41,62 @@ if (Meteor.isClient) {
 
   $(document).ready(function() {
 
-
-
     $('#FredCalendar').fullCalendar({
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'month,basicWeek,basicDay,agendaWeek,agendaDay'
+        right: 'month,agendaDay' // basicWeek,basicDay,agendaWeek,
       },
       defaultDate: '2016-01-12',
       editable: true,
+      eventDurationEditable: false,
       eventLimit: 6, //was true, // allow "more" link when too many events
+
+
+      eventSources: [{
       events: function(start, end, timezone, callback) {
         var eventHold = [];
         i=0;
         Urturns.find().forEach(function(urturn) {
+          var isEditable;
+          var setColour;
+          var isTitle;
+          if (urturn.user){
+            isEditable = true;
+            setColour = "blue";
+            isTitle = urturn.title;
+          } else {
+            isEditable = false;
+            setColour = "#7fff79";
+            isTitle = urturn.title + ':' + Slots.findOne(urturn.BackRef).title;
+          };
           eventHold[i] = {
             id: urturn._id,
-            title: urturn.title,
+            title: isTitle ,
             start: urturn.start,
-            end: urturn.end
+            end: urturn.end,
+            editable: isEditable,
+            color: setColour
           };
-         // console.log(eventHold[i]);
+         console.log("Events ran");
 
           i++;
         });
         Slots.find().forEach(function(slot) {
-          eventHold[i] = {
-            id: slot._id,
-            title: slot.title,
-            start: slot.start,
-            end: slot.end,
-            backgroundColor: slot.backgroundColor,
-            borderColor: slot.borderColor,
-            textColor: slot.textColor,
-            editable: slot.editable
-          };
-          // console.log(eventHold[i]);
-
-          i++;
+          if(!slot.Hidden) {
+            eventHold[i] = {
+              id: slot._id,
+              title: slot.title,
+              start: slot.start,
+              end: slot.end,
+              backgroundColor: slot.backgroundColor,
+              borderColor: slot.borderColor,
+              textColor: slot.textColor,
+              editable: slot.editable
+            };
+            // console.log(eventHold[i]);
+            i++;
+          }
         });
        // console.log(eventHold);
         /* var garyc = 'Gary Carter';
@@ -96,94 +115,10 @@ if (Meteor.isClient) {
         callback(eventHold);
 
 
-       /* callback([
-          {
-            id: 1,
-            title: 'Morning Service',
-            start: '2016-01-10T08:00:00',
-            end: '2016-01-10T09:00:00',
-            backgroundColor: 'white',
-            borderColor: 'black',
-            textColor: 'grey',
-            editable: false
-          },
-          {
-            id: 2,
-            title: 'Morning Service',
-            start: '2016-01-10T10:00:00',
-            end: '2016-01-10T11:00:00',
-            backgroundColor: 'white',
-            borderColor: 'black',
-            textColor: 'grey',
-            editable: false
-          },
-          {
-            id: 3,
-            title: 'Evening Service',
-            start: '2016-01-10T16:00:00',
-            end: '2016-01-10T17:00:00',
-            backgroundColor: 'white',
-            borderColor: 'black',
-            textColor: 'grey',
-            editable: false
-          },
-          {
-            id: 4,
-            title: 'Evening Service',
-            start: '2016-01-10T18:00:00',
-            end: '2016-01-10T19:00:00',
-            backgroundColor: 'white',
-            borderColor: 'black',
-            textColor: 'grey',
-            editable: false
-          },
-          {
-            title: 'Gary Carter',
-            start: '2016-01-03T08:00:00',
-            end: '2016-01-03T09:00:00'
-          },
-          {
-            title: 'Fred Astair',
-            start: '2016-01-03T08:00:00',
-            end: '2016-01-03T09:00:00'
-          },
-          {
-            title: 'Gavin Carter',
-            start: '2016-01-03T10:00:00',
-            end: '2016-01-03T11:00:00'
-          },
-          {
-            title: 'Jack Astair',
-            start: '2016-01-03T10:00:00',
-            end: '2016-01-03T11:00:00'
-          },
-          {
-            title: 'Kirsty Carter',
-            start: '2016-01-03T16:00:00',
-            end: '2016-01-03T17:00:00'
-          },
-          {
-            title: 'Alice Astair',
-            start: '2016-01-03T16:00:00',
-            end: '2016-01-03T17:00:00'
-          },
-          {
-            title: 'Tracey Carter',
-            start: '2016-01-03T18:00:00',
-            end: '2016-01-03T19:00:00'
-          },
-          {
-            title: 'Bob Astair',
-            start: '2016-01-03T18:00:00',
-            end: '2016-01-03T19:00:00'
-          },
-          {
-            title: 'Click for Google',
-            url: 'http://google.com/',
-            start: '2016-01-28'
-          }
-        ]); */
-      },
+
+      }
+        //,
+      }],
       dayClick: function(date, jsEvent, view) {
         //alert('Clicked on: ' + date.format());
 
@@ -203,15 +138,52 @@ if (Meteor.isClient) {
       },
       eventDrop: function(event, delta, revertFunc) {
 
-       console.log(event.title + " was dropped on " + event.start.format() + ' '+ event.id);
-
-       console.log('putback: '+ event.start);
-
+        console.log(event.title + " was dropped on " + event.start.format() + ' ' + event.id);
+        var CanDrop = false;
         Slots.find({start: event.start.format()}).forEach(function(slot) {
-          console.log(slot.start + ' '+ slot._id);
-          Urturns.update(event.id,{$set: {BackRef: slot._id}});
-         $('#FredCalendar').fullCalendar( 'removeEvents' ,slot._id);
+          CanDrop = true;
         });
+        if (CanDrop) {
+
+          var BackRefHold;
+          console.log('source: ' + event.source);
+          var count = 0;
+          Urturns.find({_id: event.id}).forEach(function (urturn) {
+            BackRefHold = urturn.BackRef;
+            console.log(BackRefHold + ' ' + urturn.BackRef);
+          });
+          Urturns.find({BackRef: BackRefHold}).forEach(function (turn) {
+            count++;
+          });
+          console.log(count + ' BackRefHold: ' + BackRefHold);
+
+          Urturns.find({_id: event.id}).forEach(function (urturn) {
+            Slots.find({_id: urturn.BackRef}).forEach(function (slot) {
+              if (count < 2) {
+                Slots.update(slot._id, {$set: {Hidden: false}});
+                $('#FredCalendar').fullCalendar('renderEvent', slot);
+              };
+            });
+          });
+
+
+          Slots.find({start: event.start.format()}).forEach(function (slot) {
+            console.log(slot.start + ' ' + slot._id);
+
+            Urturns.update(event.id, {$set: {start: event.start.format() }});
+            Urturns.update(event.id, {$set: {end: event.end.format() }});
+            Urturns.update(event.id, {$set: {BackRef: slot._id}});
+            Slots.update(slot._id, {$set: {Hidden: true}});
+            $('#FredCalendar').fullCalendar('removeEvents', slot._id);
+          });
+
+          $('#FredCalendar').fullCalendar( 'gotoDate', event.start.format() );
+          $('#FredCalendar').fullCalendar( 'changeView', 'agendaDay' )
+        }
+        else {
+          revertFunc();
+        };
+        //alert('About to refresh');
 
         //  var slot = Slots.find({start: event.start.format()});
       //  var slot = Slots.find();
@@ -221,22 +193,39 @@ if (Meteor.isClient) {
         }*/
        // $('#FredCalendar').fullCalendar( 'removeEvents' ,slot.id);
 
+      },
+      eventClick: function(calEvent, jsEvent, view) {
+
+        $("#urturn_form").modal('show');
+        //alert('Event: ' + calEvent.title);
+       // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        // alert('View: ' + view.name);
+
+        // change the border color just for fun
+        // $(this).css('border-color', 'red');
+
       }
-      /*,
-      dayRender: function(date, cell){
-        $(cell).addClass('fc-state-highlight');
-      }*/
+
+
+    /*,
+    dayRender: function(date, cell){
+      $(cell).addClass('fc-state-highlight');
+    }*/
 
       });
 
+      Meteor.setTimeout(function(){
+        $('#FredCalendar').fullCalendar( 'next' );
+        $('#FredCalendar').fullCalendar( 'prev' );
+      },200);
 
 
 
-    });
+    }); //end document ready
 
 
 
-}
+} // end is client
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
