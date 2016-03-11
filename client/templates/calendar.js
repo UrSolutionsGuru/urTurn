@@ -73,7 +73,11 @@ Template.calendar.helpers({
           CanDrop = true;
         });
         if (CanDrop) {
-          var BackRefHold;
+
+          console.log('The Event: '+event);
+          moveUrturn(event);
+
+       /*   var BackRefHold;
           console.log('source: ' + event.source);
           var count = 0;
           Urturns.find({_id: event.id}).forEach(function (urturn) {
@@ -104,10 +108,11 @@ Template.calendar.helpers({
             Urturns.update(event.id, {$set: {BackRef: slot._id}});
             Slots.update(slot._id, {$set: {Hidden: true}});
             $('.fc').fullCalendar('removeEvents', slot._id);
-          });
+          }); */
 
           $('.fc').fullCalendar('gotoDate', event.start.format());
           $('.fc').fullCalendar('changeView', 'agendaDay')
+
         }
         else {
           revertFunc();
@@ -125,7 +130,15 @@ Template.calendar.helpers({
         Session.set("holdDefaultDate",calEvent.start.format());
         console.log('Default Date Set: '+Session.get("holdDefaultDate")+' ' +calEvent.start.format());
         //Router.go('/');
-        Router.go('/turn/'+ calEvent.id);
+        //Router.go('/turn/'+ calEvent.id);
+
+        var data2 = Urturns.findOne({_id: calEvent.id});
+        var data = {
+          _id: calEvent.id
+        };
+        Blaze.renderWithData(Template.urturnModal,data2,document.body);
+
+
         //$("#urturn_form").modal('show');
        // alert('Event: ' + calEvent.start.format() + calEvent.id);
         // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
@@ -158,11 +171,11 @@ $(document).ready(function() {
     $('.fc').fullCalendar( 'next' );
     $('.fc').fullCalendar( 'prev' );
     $('.fc').fullCalendar('option', 'height', '');
-
-    $('.fc').fullCalendar('option', 'header', {
+    console.log('delayed start ran');
+  /*  $('.fc').fullCalendar('option', 'header', {
       left: 'prev,next today',
       center: 'title',
       right: 'month,agendaDay' // basicWeek,basicDay,agendaWeek,
-    });
+    });*/
   },200);
 });

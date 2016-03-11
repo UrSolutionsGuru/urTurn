@@ -1,0 +1,68 @@
+<template name="urturnModal">
+  <div class="container">
+    <div class="modal fade"  id="urturn_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">{{_id}}{{title}}</h4>
+            {{#with getSlot}}
+              <h4 class="modal-title">{{_id}}{{title}}</h4>
+            {{/with}}
+          </div>
+          <div class="modal-body">
+            <a class="btn btn-default js-toggle-website-form" href="#">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </a>
+            <div id="website_form" class="hidden_div">
+              <form class="js-save-urturnmodal-form">
+                <div class="form-group">
+                  <label for="url">Site address</label>
+                  <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+                </div>
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" class="form-control" id="title" placeholder="{{title}}">
+                </div>
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <input type="text" class="form-control" id="description" value={{title}}>
+                </div>
+                <div class="form-group">
+                  <label for="selection">Selection</label>
+                  <select class="form-control" id="selection">
+                    <option value="undefined" selected></option>
+                    {{#each getSlots}}
+                      <option value={{_id}}>{{title}}:{{start}}</option>
+                    {{/each}}
+                  </select>
+
+                </div>
+
+
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Dropdown
+                    <span class="caret"></span>
+                  </button>
+
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    {{#each getSlots}}
+                      <li><a href="#">{{title}}:{{start}}</a></li>
+                    {{/each}}
+
+                  </ul>
+                </div>
+
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
