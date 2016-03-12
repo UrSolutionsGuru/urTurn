@@ -26,6 +26,7 @@ Template.calendar.helpers({
             title: isTitle,
             start: urturn.start,
             end: urturn.end,
+            //className: ['glyphicon', 'glyphicon-ok'],
             editable: isEditable,
             durationEditable: false,
             color: setColour
@@ -75,7 +76,7 @@ Template.calendar.helpers({
         if (CanDrop) {
 
           console.log('The Event: '+event);
-          moveUrturn(event);
+          moveUrturn(event.id, event.start.format(), event.end.format());
 
        /*   var BackRefHold;
           console.log('source: ' + event.source);
@@ -153,7 +154,6 @@ Template.calendar.helpers({
       console.log('Default Date: '+Session.get("holdDefaultDate"));
       return Session.get("holdDefaultDate");
     }
-
 
 });
 

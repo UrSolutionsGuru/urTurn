@@ -34,9 +34,9 @@ Template.urturnModal.events ({
         end: Slots.findOne({_id: selection}).end
       };
       console.log('New created event: ' + event.id + event.start);
-      moveUrturn(event);
-      $('.fc').fullCalendar( 'next' );
-      $('.fc').fullCalendar( 'prev' );
+      moveUrturn(this._id, Slots.findOne({_id: selection}).start, Slots.findOne({_id: selection}).end );
+      $('.fc').fullCalendar( 'nextYear' );
+      $('.fc').fullCalendar( 'prevYear' );
       console.log('After event: '+this.title);
     }
     return false;// stop the form submit from reloading the page
