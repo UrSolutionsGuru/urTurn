@@ -140,6 +140,7 @@ Meteor.startup(function () {
         editable: false,
         urturn: [{
           title: 'Gary Carter',
+          facebook: "csDBRp7CZK9St486r",
           user: true
         }]
       },
@@ -156,7 +157,8 @@ Meteor.startup(function () {
           user: false
         },
         {
-          title: 'Gavin Carter',
+          title: 'Robbie Carter',
+          facebook: "zCWcP8DPe6dqQ2t6E",
           user: false
         }]
       },
@@ -239,8 +241,9 @@ Meteor.startup(function () {
 
     _.each(dataTurnSlots, function(list) {
       var slot_id = Slots.insert({title: list.title,
-        start: list.start,
-        end: list.end,
+        type: 'Slot',
+        start: moment(list.start).format(),
+        end: moment(list.end).format(),
         backgroundColor: list.backgroundColor,
         borderColor: list.borderColor,
         textColor: list.textColor,
@@ -250,9 +253,11 @@ Meteor.startup(function () {
       });
       _.each(list.urturn, function(aturn) {
           Urturns.insert({title: aturn.title,
+            type: 'Urturn',
             user: aturn.user,
-            start: list.start,
-            end: list.end,
+            start: moment(list.start).format(),
+            end: moment(list.end).format(),
+            facebook: aturn.facebook,
             BackRef : slot_id,
             createdAt: new Date(timestamp)
           });

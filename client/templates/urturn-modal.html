@@ -4,13 +4,16 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">{{_id}}{{title}}</h4>
+            <h4 class="modal-title">From HTML outside GetSlot {{_id}}{{title}}</h4>
             {{#with getSlot}}
-              <h4 class="modal-title">{{_id}}{{title}}</h4>
+              <h4 class="modal-title">From HTML inside GetSlot {{_id}}{{title}}</h4>
+            {{/with}}
+            {{#with tisId}}
+              <h3>??{{_id}}</h3>
             {{/with}}
           </div>
           <div class="modal-body">
-            <a class="btn btn-default js-toggle-website-form" href="#">
+            <a class="btn btn-default js-add-new-me" href="#">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </a>
             <div id="website_form" class="hidden_div">

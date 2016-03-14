@@ -6,12 +6,14 @@ Template.calendar.helpers({
       var fc = $('.fc');
       return function (start, end, timezone, callback) {
         var eventHold = [];
+        console.log('user id: '+ Meteor.userId());
         i = 0;
         Urturns.find().forEach(function (urturn) {
           var isEditable;
           var setColour;
           var isTitle;
-          if (urturn.user) {
+          var facebook;
+          if (Meteor.userId() && urturn.facebook == Meteor.userId()) {
             isEditable = true;
             setColour = "blue";
             isTitle = urturn.title;
@@ -24,6 +26,7 @@ Template.calendar.helpers({
           eventHold[i] = {
             id: urturn._id,
             title: isTitle,
+            type: 'Urturn',
             start: urturn.start,
             end: urturn.end,
             //className: ['glyphicon', 'glyphicon-ok'],
@@ -40,6 +43,7 @@ Template.calendar.helpers({
             eventHold[i] = {
               id: slot._id,
               title: slot.title,
+              type: 'Slot',
               start: slot.start,
               end: slot.end,
               backgroundColor: slot.backgroundColor,
@@ -132,12 +136,17 @@ Template.calendar.helpers({
         console.log('Default Date Set: '+Session.get("holdDefaultDate")+' ' +calEvent.start.format());
         //Router.go('/');
         //Router.go('/turn/'+ calEvent.id);
-
-        var data2 = Urturns.findOne({_id: calEvent.id});
+        if (calEvent.type == 'Slot'){
+          var data2 = Slots.findOne({_id: calEvent.id});
+        } else {
+          var data2 = Urturns.findOne({_id: calEvent.id});
+        }
         var data = {
           _id: calEvent.id
         };
-        Blaze.renderWithData(Template.urturnModal,data2,document.body);
+        urTurnModalViewHold = Blaze.renderWithData(Template.urturnModal,data2,document.body);
+
+
 
 
         //$("#urturn_form").modal('show');
