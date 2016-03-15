@@ -4,7 +4,7 @@
 Template.admin.events({
   'click .js-removeSlotsUrturns': function () {
 
-    if (confirm('Are you sure you want to delete Slots and Urturns')) {
+    if (confirm('Are you sure you want to delete Slots, Swops and Urturns')) {
       Meteor.call("removeSlotsUrturns");
     } else {
       // Do nothing!

@@ -7,7 +7,7 @@ moveUrturn = function (eventId, eventStart, eventEnd){
   var count = 0;
   Urturns.find({_id: eventId}).forEach(function (urturn) {
     BackRefHold = urturn.BackRef;
-    console.log(BackRefHold + ' ' + urturn.BackRef);
+    //console.log(BackRefHold + ' ' + urturn.BackRef);
   });
   Urturns.find({BackRef: BackRefHold}).forEach(function (turn) {
     count++;

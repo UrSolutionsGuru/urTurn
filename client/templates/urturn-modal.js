@@ -15,6 +15,43 @@ Template.urturnModal.helpers({
   },
   tisId: function(){
     return {_id: this._id};
+  },
+  getFroms: function(){
+    return Urturns.find({facebook: Meteor.userId(), type: 'Urturn'});
+  },
+  getSwops: function(){
+    return Urturns.find({facebook: { $not: Meteor.userId()}});
+  },
+  newMeButton: function(){
+    if (this.type == 'Swop' || (this.type == 'Urturn'  && this.facebook == Meteor.userId()) || this.type == 'CommittedUrturn') {
+      return "disabled";
+    } else {
+      return "";
+    };
+  },
+  moveMeFromButton: function(){
+    if (Urturns.findOne({BackRef: this.BackRef, facebook: Meteor.userId()})) {
+      return "disabled";
+    };
+    if (this.type == 'Slot'  || (this.type == 'Urturn' && this.facebook != Meteor.userId())) {
+      return "";
+    } else {
+      return "disabled";
+    };
+  },
+  commitMeButton: function(){
+    if (this.type == 'Urturn' && this.facebook == Meteor.userId()) {
+      return "";
+    } else {
+      return "disabled";
+    };
+  },
+  swopMeButton: function(){
+    if (this.type == 'CommittedUrturn') {
+      return "";
+    } else {
+      return "disabled";
+    };
   }
 });
 
@@ -44,16 +81,32 @@ Template.urturnModal.events ({
     }
     return false;// stop the form submit from reloading the page
   },
+  "submit .js-move-from-form":function(event) {
+    var selection = event.target.select_from.value;
+    //console.log("Selection is: " + selection);
+    if (selection != 'undefined') {
+     //console.log('Move: ' + selection + this.start);
+      moveUrturn(selection, this.start, this.end);
+      //alert('look at log');
+      $('.fc').fullCalendar( 'nextYear' );
+      $('.fc').fullCalendar( 'prevYear' );
+     // console.log('After event: '+this.title);
+    }
+    return false;// stop the form submit from reloading the page
+  },
   'hidden.bs.modal #urturn_modal':  function () {
    // $('#urturn_modal').removeData('bs.modal');
     Blaze.remove(urTurnModalViewHold);
     console.log('data removed');
   },
   'click .js-add-new-me': function () {
+    console.log('add new me');
     var timestamp = (new Date()).getTime();
     if (this.type == 'Slot' && Meteor.userId()) {
+      console.log(Meteor.userId());
+      console.log(Meteor.user());
       Urturns.insert({
-        title: Meteor.user().username,
+        title: Meteor.user().profile.name,
         type: 'Urturn',
         user: true,
         start: this.start,
@@ -62,12 +115,39 @@ Template.urturnModal.events ({
         BackRef: this._id,
         createdAt: new Date(timestamp)
       });
+      Slots.update(this._id, {$set: {Hidden: true}});
       $('.fc').fullCalendar( 'nextYear' );
       $('.fc').fullCalendar( 'prevYear' );
     }
+  },
+  'click .js-commit-me': function () {
+    if (confirm('Are you sure you want to confirm this UrTurn. Once you have confirmed you will only be able to move it by swapping with another willing party')) {
+      Urturns.update(this._id, {$set: {type: 'CommittedUrturn'}});
+      $('.fc').fullCalendar('nextYear');
+      $('.fc').fullCalendar('prevYear');
+    }
+
+  },
+  'submit .js-apply-swop-form': function () {
+    var selection = event.target.select_from.value;
+    var timestamp = (new Date()).getTime();
+    if (this.type == 'CommittedUrturn' && Meteor.userId()) {
+      Swops.insert({
+        title: Meteor.user().profile.name + ' wants to Swop',
+        type: 'Swop',
+        BackFromRef: this._id,
+        BackToRef: selection,
+        facebook: Meteor.userId(),
+        createdAt: new Date(timestamp)
+      });
+     // Slots.update(this._id, {$set: {Hidden: true}});
+      $('.fc').fullCalendar('nextYear');
+      $('.fc').fullCalendar('prevYear');
+    } else {
+        alert('Not a CommittedUrturn');
+    };
+
   }
-
-
 });
 
 Template.urturnModal.onRendered(function(){

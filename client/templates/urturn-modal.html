@@ -13,52 +13,71 @@
             {{/with}}
           </div>
           <div class="modal-body">
-            <a class="btn btn-default js-add-new-me" href="#">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </a>
-            <div id="website_form" class="hidden_div">
-              <form class="js-save-urturnmodal-form">
+            <div class="row">
+              <div class="col-md-3">
+                <button type="button" class="btn btn-primary js-add-new-me" {{newMeButton}}>Add a new Me</button>
+                <p></p>
+              </div>
+              <div class="col-md-9"></div>
+            </div>
+          <!--  <a class="btn btn-default js-add-new-me" href="#">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true">Add a new Me</span>
+            </a> -->
+
+
+            <div id="moveFrom_form" class="hidden_div">
+              <form class="js-move-from-form">
                 <div class="form-group">
-                  <label for="url">Site address</label>
-                  <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
-                </div>
-                <div class="form-group">
-                  <label for="title">Title</label>
-                  <input type="text" class="form-control" id="title" placeholder="{{title}}">
-                </div>
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <input type="text" class="form-control" id="description" value={{title}}>
-                </div>
-                <div class="form-group">
-                  <label for="selection">Selection</label>
-                  <select class="form-control" id="selection">
-                    <option value="undefined" selected></option>
-                    {{#each getSlots}}
-                      <option value={{_id}}>{{title}}:{{start}}</option>
-                    {{/each}}
-                  </select>
+                 <!-- <label for="select_from">Move from?</label> -->
+                  <div class="row">
+                    <div class="col-md-3">
+                      <button type="submit" class="btn btn-primary" {{moveMeFromButton}}>Move Me from</button>
+                    </div>
+                    <div class="col-md-9">
+                      <select class="form-control" id="select_from" {{moveMeFromButton}}>
+                        <option value="undefined" selected></option>
+                        {{#each getFroms}}
+                          <option value={{_id}}>{{title}}:{{start}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
 
+                  </div>
                 </div>
 
-
-                <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Dropdown
-                    <span class="caret"></span>
-                  </button>
-
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    {{#each getSlots}}
-                      <li><a href="#">{{title}}:{{start}}</a></li>
-                    {{/each}}
-
-                  </ul>
-                </div>
-
-                <button type="submit" class="btn btn-default">Submit</button>
               </form>
             </div>
+            <div class="row">
+              <div class="col-md-3">
+                <button type="button" class="btn btn-danger js-commit-me" {{commitMeButton}}>Commit Me</button>
+                <p></p>
+              </div>
+              <div class="col-md-9"></div>
+            </div>
+
+            <div id="applyForSwop_form" class="hidden_div">
+              <form class="js-apply-swop-form">
+                <div class="form-group">
+                  <!-- <label for="select_from">Move from?</label> -->
+                  <div class="row">
+                    <div class="col-md-3">
+                      <button type="submit" class="btn btn-primary" {{swopMeButton}}>Swop Me to</button>
+                    </div>
+                    <div class="col-md-9">
+                      <select class="form-control" id="select_from" {{swopMeButton}}>
+                        <option value="undefined" selected></option>
+                        {{#each getSwops}}
+                          <option value={{_id}}>{{title}}:{{start}}</option>
+                        {{/each}}
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -69,3 +88,47 @@
     </div>
   </div>
 </template>
+
+<!-- <div id="website_form" class="hidden_div">
+  <form class="js-save-urturnmodal-form">
+    <div class="form-group">
+      <label for="url">Site address</label>
+      <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+    </div>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" placeholder="{{title}}">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" id="description" value={{title}}>
+    </div>
+    <div class="form-group">
+      <label for="selection">Selection</label>
+      <select class="form-control" id="selection">
+        <option value="undefined" selected></option>
+        {{#each getSlots}}
+          <option value={{_id}}>{{title}}:{{start}}</option>
+        {{/each}}
+      </select>
+
+    </div>
+
+
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Dropdown
+        <span class="caret"></span>
+      </button>
+
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        {{#each getSlots}}
+          <li><a href="#">{{title}}:{{start}}</a></li>
+        {{/each}}
+
+      </ul>
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div> -->

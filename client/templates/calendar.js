@@ -16,17 +16,17 @@ Template.calendar.helpers({
           if (Meteor.userId() && urturn.facebook == Meteor.userId()) {
             isEditable = true;
             setColour = "blue";
-            isTitle = urturn.title;
+            isTitle = urturn.title + ((urturn.type == 'CommittedUrturn') ? " - COMMITTED" : "");
           } else {
             isEditable = false;
             setColour = "#7fff79";
-            isTitle = urturn.title + ':' + Slots.findOne(urturn.BackRef).title;
-          }
-          ;
+            isTitle = urturn.title + ': ' + Slots.findOne(urturn.BackRef).title;
+          };
           eventHold[i] = {
             id: urturn._id,
             title: isTitle,
-            type: 'Urturn',
+            type: urturn.type,
+            borderColor: ((urturn.type == "CommittedUrturn") ? "black" : ""),
             start: urturn.start,
             end: urturn.end,
             //className: ['glyphicon', 'glyphicon-ok'],
@@ -55,6 +55,23 @@ Template.calendar.helpers({
             i++;
           }
         });
+        Swops.find().forEach(function (swop) {
+
+            eventHold[i] = {
+              id: swop._id,
+              title: swop.title,
+              type: 'Swop',
+              start: Urturns.findOne({_id: swop.BackToRef}).start,
+              end: Urturns.findOne({_id: swop.BackToRef}).end,
+              backgroundColor: 'red',
+              borderColor: 'black',
+              textColor: 'white',
+              editable: false
+            };
+            // console.log(eventHold[i]);
+            i++;
+
+        });
 
         callback(eventHold);
 
@@ -69,11 +86,42 @@ Template.calendar.helpers({
         $("td[data-date=" + date.format('YYYY-MM-DD') + "]").addClass("fc-state-highlight");
       }
     },
+    eventMouseover: function (){
+      return function (event,jsEvent, view) {
+        /*console.log('jsEvent and View from eventMouseover');
+        console.log(jsEvent);
+        console.log(view.intervalUnit);
+        console.log(event.title + " started " + event.start.format() + ' ' + event.id);
+        */
+      };
+    },
+    eventDragStart: function (){
+      return function (event,jsEvent,ui, view) {
+       /* console.log('jsEvent and View from eventDragStart');
+        console.log(jsEvent);
+        console.log(view.intervalUnit);
+        console.log(event.title + " started " + event.start.format() + ' ' + event.id);
+        */
+      };
+    },
+    eventDragStop: function (){
+      return function (event,jsEvent,ui, view) {
+       /* console.log('jsEvent and View from eventDragStop');
+        console.log(jsEvent);
+        console.log(view.intervalUnit);
+        console.log(event.title + " was dragged on " + event.start.format() + ' ' + event.id);
+        */
+      };
+    },
     eventDrop: function () {
       var fc = $('.fc');
-      return function (event, delta, revertFunc) {
-        console.log(event.title + " was dropped on " + event.start.format() + ' ' + event.id);
+      return function (event, delta, revertFunc, jsEvent,ui, view) {
+        console.log(event.title + " was dropped on " + event.start.format() + ' ' + event.id + 'Delta: '+delta);
+        console.log(delta);
         var CanDrop = false;
+        console.log('jsEvent and View');
+        console.log(jsEvent);
+        console.log(view.intervalUnit);
         Slots.find({start: event.start.format()}).forEach(function (slot) {
           CanDrop = true;
         });
@@ -125,7 +173,7 @@ Template.calendar.helpers({
         ;
 
 
-      }
+      };
     },
 
     eventClick: function () {
@@ -138,9 +186,17 @@ Template.calendar.helpers({
         //Router.go('/turn/'+ calEvent.id);
         if (calEvent.type == 'Slot'){
           var data2 = Slots.findOne({_id: calEvent.id});
-        } else {
+        };
+
+        if (calEvent.type == 'Swop'){
+          var data2 = Swops.findOne({_id: calEvent.id});
+         // $('.js-add-new-me').prop('disabled', true);
+          // $('.js-add-new-me').add
+        };
+
+        if (calEvent.type == 'Urturn' || calEvent.type == 'CommittedUrturn'){
           var data2 = Urturns.findOne({_id: calEvent.id});
-        }
+        };
         var data = {
           _id: calEvent.id
         };

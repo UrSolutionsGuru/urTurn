@@ -5,6 +5,7 @@ Meteor.methods({
   removeSlotsUrturns: function () {
     Slots.remove({});
     Urturns.remove({});
+    Swops.remove({});
   },
   addMoreSLots: function (){ //cant work here server does not know about fullcalendar??
     //var calendar = $('.fc').fullCalendar('getCalendar');
