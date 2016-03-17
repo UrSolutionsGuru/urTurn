@@ -52,6 +52,18 @@ Template.urturnModal.helpers({
     } else {
       return "disabled";
     };
+  },
+  acceptSwopButton: function(){
+    if (this.type == 'Swop') {
+      var canDo = false;
+      Urturns.find({start: Slots.findOne({_id: this.BackToRef}).start, facebook: Meteor.userId()}).forEach(function (slot)
+        {canDo = true;}); // I must be there to swop
+      console.log(canDo +'' +this.BackToRef);
+      if (this.facebook == Meteor.userId()){canDo = false;}; // cant swop my own request
+      if (canDo){return "";} else {return "disabled"};
+    } else {
+      return "disabled";
+    };
   }
 });
 
@@ -97,7 +109,7 @@ Template.urturnModal.events ({
   'hidden.bs.modal #urturn_modal':  function () {
    // $('#urturn_modal').removeData('bs.modal');
     Blaze.remove(urTurnModalViewHold);
-    console.log('data removed');
+   // console.log('data removed');
   },
   'click .js-add-new-me': function () {
     console.log('add new me');
@@ -125,6 +137,37 @@ Template.urturnModal.events ({
       Urturns.update(this._id, {$set: {type: 'CommittedUrturn'}});
       $('.fc').fullCalendar('nextYear');
       $('.fc').fullCalendar('prevYear');
+      Meteor.call('sendEmail',
+        'alice@example.com',
+        'bob@example.com',
+        'Hello from Meteor!',
+        'This is a test of Email.send.');
+
+    }
+
+  },
+  'click .js-accept-swop':function () {
+    if (confirm('Are you sure you want to confirm this Swop. Once you have confirmed you will only be able to move it by swapping with another willing party')) {
+
+      var requestor = this.BackFromRef;
+      var reqStart = Urturns.findOne({_id: requestor}).start;
+      var reqEnd = Urturns.findOne({_id: requestor}).end;
+      var accStart = Slots.findOne({_id : this.BackToRef}).start;
+      var accEnd = Slots.findOne({_id : this.BackToRef}).end;
+      var acceptor = Urturns.findOne({start: accStart, facebook: Meteor.userId() })._id;
+
+    //  console.log("req "+requestor+reqStart+reqEnd);
+    //  console.log("acc "+acceptor+accStart+accEnd);
+
+      moveUrturn(requestor, accStart,accEnd );
+      moveUrturn(acceptor, reqStart,reqEnd );
+      Urturns.update(requestor, {$set: {type: 'CommittedUrturn'}});
+      Urturns.update(acceptor, {$set: {type: 'CommittedUrturn'}});
+      Swops.remove({_id: this._id});
+
+      // Urturns.update(this._id, {$set: {type: 'CommittedUrturn'}});
+      $('.fc').fullCalendar('nextYear');
+      $('.fc').fullCalendar('prevYear');
     }
 
   },
@@ -136,8 +179,8 @@ Template.urturnModal.events ({
         title: Meteor.user().profile.name + ' wants to Swop',
         type: 'Swop',
         BackFromRef: this._id,
-        BackToRef: selection,
-        facebook: Meteor.userId(),
+        BackToRef: Urturns.findOne({_id: selection}).BackRef, //We want the reference to the slot not to the target swopee
+        facebook: Meteor.userId(),                            // incase the target swopee moves off
         createdAt: new Date(timestamp)
       });
      // Slots.update(this._id, {$set: {Hidden: true}});

@@ -17,3 +17,7 @@ Template.admin.events({
   }
 
 });
+
+Template.admin.onRendered(function() {
+  Session.set("holdMenu", "admin");
+});

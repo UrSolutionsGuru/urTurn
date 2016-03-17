@@ -239,6 +239,31 @@ Meteor.startup(function () {
 
     var timestamp = (new Date()).getTime();
 
+    var morning = Services.insert({
+      title: "Morning Services"
+    });
+    timestamp += 1;
+    var evening = Services.insert({
+      title: "Evening Services"
+    });
+    timestamp += 1;
+
+    Subs.insert ({
+      title: "Gary Morning",
+      service: morning,
+      facebook: "csDBRp7CZK9St486r"
+    });
+    Subs.insert ({
+      title: "Gary Evening",
+      service: evening,
+      facebook: "csDBRp7CZK9St486r"
+    });
+    Subs.insert ({
+      title: "Robbie Morning",
+      service: morning,
+      facebook: "zCWcP8DPe6dqQ2t6E"
+    });
+
     _.each(dataTurnSlots, function(list) {
       var slot_id = Slots.insert({title: list.title,
         type: 'Slot',
@@ -249,6 +274,7 @@ Meteor.startup(function () {
         textColor: list.textColor,
         editable: list.editable,
         Hidden: false,
+        service: ((list.title == 'Evening Service')? evening : morning),
         createdAt: new Date(timestamp)
       });
       _.each(list.urturn, function(aturn) {

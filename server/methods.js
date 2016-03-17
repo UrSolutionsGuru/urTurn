@@ -6,19 +6,26 @@ Meteor.methods({
     Slots.remove({});
     Urturns.remove({});
     Swops.remove({});
+    Services.remove({});
+    Subs.remove({});
   },
-  addMoreSLots: function (){ //cant work here server does not know about fullcalendar??
-    //var calendar = $('.fc').fullCalendar('getCalendar');
+  sendEmail: function (to, from, subject, text) {
+   //? check([to, from, subject, text], [String]);
 
-   //var startTime = moment('2016-01-24T08:00:00');
-  // var addNumber = 24;
-    //var addTwoHours = moment(startTime);
-   // addTwoHours.add(1,'hours');
+    // Let other method calls from the same client start running,
+    // without waiting for the email sending to complete.
+  //?  this.unblock();
+
+    Email.send({
+      to: to,
+      from: from,
+      subject: subject,
+      text: text
+    });
+  },
+
+  addMoreSLots: function (){
     var addNumber = 24;
-   // console.log (startTime.format());
-   // console.log (addTwoHours.format());
-  // console.log (startTime);
-
     var timestamp = (new Date()).getTime();
 
     var slotTitles = [

@@ -61,8 +61,8 @@ Template.calendar.helpers({
               id: swop._id,
               title: swop.title,
               type: 'Swop',
-              start: Urturns.findOne({_id: swop.BackToRef}).start,
-              end: Urturns.findOne({_id: swop.BackToRef}).end,
+              start: Slots.findOne({_id: swop.BackToRef}).start,
+              end: Slots.findOne({_id: swop.BackToRef}).end,
               backgroundColor: 'red',
               borderColor: 'black',
               textColor: 'white',
@@ -243,4 +243,5 @@ $(document).ready(function() {
       right: 'month,agendaDay' // basicWeek,basicDay,agendaWeek,
     });*/
   },200);
+  $('[data-toggle="tooltip"]').tooltip();
 });

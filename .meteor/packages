@@ -24,3 +24,4 @@ iron:router
 accounts-ui
 accounts-facebook
 momentjs:moment
+email

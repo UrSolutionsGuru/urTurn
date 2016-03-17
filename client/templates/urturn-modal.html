@@ -14,12 +14,18 @@
           </div>
           <div class="modal-body">
             <div class="row">
+              <div class="col-md-9">
+                <p>Add a New Me (a blue appoinment with your name in it) to this Slot. You can later move it to another Slot or you can Commit it, if you are prepared to be there at that time!</p>
+              </div>
               <div class="col-md-3">
-                <button type="button" class="btn btn-primary js-add-new-me" {{newMeButton}}>Add a new Me</button>
+                <button type="button" class="btn btn-default js-add-new-me" data-toggle="tooltip" data-placement="left" title="Hooray!" data-dismiss="modal" {{newMeButton}}>Add a new Me</button>
                 <p></p>
               </div>
-              <div class="col-md-9"></div>
+
             </div>
+          </div>
+          <div class="modal-body">
+
           <!--  <a class="btn btn-default js-add-new-me" href="#">
               <span class="glyphicon glyphicon-plus" aria-hidden="true">Add a new Me</span>
             </a> -->
@@ -30,10 +36,15 @@
                 <div class="form-group">
                  <!-- <label for="select_from">Move from?</label> -->
                   <div class="row">
-                    <div class="col-md-3">
-                      <button type="submit" class="btn btn-primary" {{moveMeFromButton}}>Move Me from</button>
-                    </div>
                     <div class="col-md-9">
+                      <p>Instead of creating a New Me, "Move Me from" another location. (You can also drag and drop to perform this operation.)</p>
+                    </div>
+                    <div class="col-md-3"></div>
+                  </div>
+                  <div class="row">
+
+                    <div class="col-md-9">
+
                       <select class="form-control" id="select_from" {{moveMeFromButton}}>
                         <option value="undefined" selected></option>
                         {{#each getFroms}}
@@ -41,28 +52,41 @@
                         {{/each}}
                       </select>
                     </div>
+                    <div class="col-md-3">
+                      <button type="submit" class="btn btn-default"  {{moveMeFromButton}}>Move Me from</button>
+                    </div>
 
                   </div>
                 </div>
 
               </form>
             </div>
+          </div>
+          <div class="modal-body">
             <div class="row">
+              <div class="col-md-9">
+                <p>Commit this to indicate that you are prepared to serve in this Slot, and that your planning is over!</p>
+              </div>
               <div class="col-md-3">
-                <button type="button" class="btn btn-danger js-commit-me" {{commitMeButton}}>Commit Me</button>
+                <button type="button" class="btn btn-danger js-commit-me" data-dismiss="modal" {{commitMeButton}}>Commit Me</button>
                 <p></p>
               </div>
-              <div class="col-md-9"></div>
             </div>
+          </div>
+          <div class="modal-body">
 
             <div id="applyForSwop_form" class="hidden_div">
               <form class="js-apply-swop-form">
                 <div class="form-group">
                   <!-- <label for="select_from">Move from?</label> -->
                   <div class="row">
-                    <div class="col-md-3">
-                      <button type="submit" class="btn btn-primary" {{swopMeButton}}>Swop Me to</button>
+                    <div class="col-md-9">
+                      <p>Select someone to swop with and then click "Swop Me with". The other party will have to approve this before it is in effect. You will see all the Swop Requests in red. )</p>
                     </div>
+                    <div class="col-md-3"></div>
+                  </div>
+                  <div class="row">
+
                     <div class="col-md-9">
                       <select class="form-control" id="select_from" {{swopMeButton}}>
                         <option value="undefined" selected></option>
@@ -71,11 +95,23 @@
                         {{/each}}
                       </select>
                     </div>
-
+                    <div class="col-md-3">
+                      <button type="submit" class="btn btn-default"  {{swopMeButton}}>Swop Me with</button>
+                    </div>
                   </div>
                 </div>
 
               </form>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-9">
+                  <p>If you accept this swop, then you will be moved into the requestors Slot and your entry will be marked as Committed!</p>
+                </div>
+                <div class="col-md-3">
+                  <button type="button" class="btn btn-danger js-accept-swop" data-dismiss="modal" {{acceptSwopButton}}>Accept Swop</button>
+                </div>
+              </div>
             </div>
 
           </div>
