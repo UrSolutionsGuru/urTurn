@@ -28,6 +28,9 @@ Meteor.methods({
     var addNumber = 24;
     var timestamp = (new Date()).getTime();
 
+    var morning = Services.findOne({title: "Morning Services"})._id;
+    var evening = Services.findOne({title: "Evening Services"})._id;
+
     var slotTitles = [
       {title: 'Morning Service', start: '2016-01-24T08:00:00'},
       {title: 'Morning Service', start: '2016-01-24T10:00:00'},
@@ -50,6 +53,7 @@ Meteor.methods({
           textColor: 'grey',
           editable: false,
           Hidden: false,
+          service: ((list.title == 'Morning Service') ? morning : evening),
           createdAt: new Date(timestamp)
         });
         timestamp += 1; // ensure unique timestamp.

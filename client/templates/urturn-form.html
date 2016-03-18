@@ -33,3 +33,15 @@
   </div>
 </template>
 
+<template name="test">
+  <div class="container">
+    {{#each getsubs}}
+      {{> thesubs}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="thesubs">
+  <p>the subs {{title}}</p>
+</template>
+

@@ -7,3 +7,9 @@ Template.urturnForm.helpers({
     return Slots.find({});
   }
 });
+
+Template.test.helpers({
+  getsubs:function(){
+    return Subs.find({});
+  }
+});

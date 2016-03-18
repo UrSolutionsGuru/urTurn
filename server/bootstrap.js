@@ -239,30 +239,39 @@ Meteor.startup(function () {
 
     var timestamp = (new Date()).getTime();
 
+    console.log('starting to load');
     var morning = Services.insert({
-      title: "Morning Services"
+      title: "Morning Services",
+      createdAt: new Date(timestamp)
     });
     timestamp += 1;
     var evening = Services.insert({
-      title: "Evening Services"
+      title: "Evening Services",
+      createdAt: new Date(timestamp)
     });
     timestamp += 1;
 
     Subs.insert ({
       title: "Gary Morning",
       service: morning,
-      facebook: "csDBRp7CZK9St486r"
+      facebook: "csDBRp7CZK9St486r",
+      createdAt: new Date(timestamp)
     });
+    timestamp += 1;
     Subs.insert ({
       title: "Gary Evening",
       service: evening,
-      facebook: "csDBRp7CZK9St486r"
+      facebook: "csDBRp7CZK9St486r",
+      createdAt: new Date(timestamp)
     });
+    timestamp += 1;
     Subs.insert ({
       title: "Robbie Morning",
       service: morning,
-      facebook: "zCWcP8DPe6dqQ2t6E"
+      facebook: "zCWcP8DPe6dqQ2t6E",
+      createdAt: new Date(timestamp)
     });
+    timestamp += 1;
 
     _.each(dataTurnSlots, function(list) {
       var slot_id = Slots.insert({title: list.title,
