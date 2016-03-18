@@ -38,10 +38,16 @@
     {{#each getsubs}}
       {{> thesubs}}
     {{/each}}
+    {{#each getservs}}
+      {{> theservs}}
+    {{/each}}
   </div>
 </template>
 
 <template name="thesubs">
-  <p>the subs {{title}}</p>
+  <p>the subs {{title}} {{service}} {{facebook}}</p>
 </template>
 
+<template name="theservs">
+  <p>the services {{title}}</p>
+</template>

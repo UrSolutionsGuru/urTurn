@@ -58,7 +58,7 @@ Template.urturnModal.helpers({
       var canDo = false;
       Urturns.find({start: Slots.findOne({_id: this.BackToRef}).start, facebook: Meteor.userId()}).forEach(function (slot)
         {canDo = true;}); // I must be there to swop
-      console.log(canDo +'' +this.BackToRef);
+     // console.log(canDo +'' +this.BackToRef);
       if (this.facebook == Meteor.userId()){canDo = false;}; // cant swop my own request
       if (canDo){return "";} else {return "disabled"};
     } else {
@@ -76,8 +76,8 @@ Template.urturnModal.events ({
 
     var description = event.target.description.value;
     var selection = event.target.selection.value;
-    console.log("The url they entered is: " + url+title+description);
-    console.log("Selection is: " + selection);
+   // console.log("The url they entered is: " + url+title+description);
+   // console.log("Selection is: " + selection);
 
     if (selection != 'undefined') {
       var event = {
@@ -85,11 +85,11 @@ Template.urturnModal.events ({
         start: Slots.findOne({_id: selection}).start,
         end: Slots.findOne({_id: selection}).end
       };
-      console.log('New created event: ' + event.id + event.start);
+    //  console.log('New created event: ' + event.id + event.start);
       moveUrturn(this._id, Slots.findOne({_id: selection}).start, Slots.findOne({_id: selection}).end );
       $('.fc').fullCalendar( 'nextYear' );
       $('.fc').fullCalendar( 'prevYear' );
-      console.log('After event: '+this.title);
+    //  console.log('After event: '+this.title);
     }
     return false;// stop the form submit from reloading the page
   },
@@ -112,11 +112,11 @@ Template.urturnModal.events ({
    // console.log('data removed');
   },
   'click .js-add-new-me': function () {
-    console.log('add new me');
+  //  console.log('add new me');
     var timestamp = (new Date()).getTime();
     if (this.type == 'Slot' && Meteor.userId()) {
-      console.log(Meteor.userId());
-      console.log(Meteor.user());
+     // console.log(Meteor.userId());
+    // console.log(Meteor.user());
       Urturns.insert({
         title: Meteor.user().profile.name,
         type: 'Urturn',
@@ -204,8 +204,8 @@ Template.urturnModal.onRendered(function(){
     console.log('data removed');
   }); */
 
-  console.log('From inside onRender '+_this.data)//this will print the data object you pass on the event
-  console.log(this.data)//this will print the data object you pass on the event
+ // console.log('From inside onRender '+_this.data)//this will print the data object you pass on the event
+ // console.log(this.data)//this will print the data object you pass on the event
 });
 
 Template.urturnModal.onDestroyed(function(){

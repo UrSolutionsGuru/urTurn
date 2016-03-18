@@ -11,5 +11,12 @@ Template.urturnForm.helpers({
 Template.test.helpers({
   getsubs:function(){
     return Subs.find({});
+  },
+  getservs:function(){
+    return Services.find({});
   }
+});
+
+Template.test.onRendered(function() {
+  Session.set("holdMenu", "test");
 });

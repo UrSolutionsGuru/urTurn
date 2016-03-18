@@ -231,6 +231,15 @@ Template.calendar.events({
   }
 });
 
+Template.calendar.onRendered( function (){
+  Tracker.autorun(function(){
+    Urturns.find().fetch();
+
+    console.log('THE NEW RERENDER');
+    $('.fc').fullCalendar( 'refetchEvents' );
+  });
+});
+
 $(document).ready(function() {
   Meteor.setTimeout(function(){
     $('.fc').fullCalendar( 'next' );
