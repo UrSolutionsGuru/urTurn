@@ -1,0 +1,24 @@
+<template name="me">
+  <div class="container">
+    <form class="js-my-services-form">
+      <div class="form-group">
+        {{#each myServices}}
+          {{> myService}}
+        {{/each}}
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+  </div>
+</template>
+
+<template name="myService">
+
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" checked={{displayIt}} id={{_id}}>
+        Sub: {{title}}
+      </label>
+    </div>
+
+</template>

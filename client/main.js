@@ -17,9 +17,11 @@ Template.body.helpers({
   }
 });
 
+
+
 Meteor.subscribe('mySlots');
 //Meteor.subscribe('slots');
 //Meteor.subscribe('urturns');
 //Meteor.subscribe('swops');
 
-//Meteor.subscribe('subs');
+Meteor.subscribe('subs');

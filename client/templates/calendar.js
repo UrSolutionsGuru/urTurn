@@ -234,7 +234,7 @@ Template.calendar.events({
 Template.calendar.onRendered( function (){
   Tracker.autorun(function(){
     Urturns.find().fetch();
-
+    Subs.find().fetch();
     console.log('THE NEW RERENDER');
     $('.fc').fullCalendar( 'refetchEvents' );
   });

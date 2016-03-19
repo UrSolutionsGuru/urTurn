@@ -9,7 +9,7 @@ Meteor.publishComposite('mySlots', {
     // myServices[0] =  "zE68Bdzw4eFZ3snp7";
    // myServices[1] =  "mRdGu8ptdi3aKoudE";
     var i = 0;
-    Subs.find({facebook: this.userId}).forEach(function (sub)
+    Subs.find({facebook: this.userId, displayIt: true}).forEach(function (sub)
     {
       myServices[i] = sub.service;
       i++;
@@ -61,5 +61,5 @@ Meteor.publish("swops", function (){
 });
 
 Meteor.publish("subs", function (){
-  return Subs.find({});
+  return Subs.find({facebook: this.userId});
 });

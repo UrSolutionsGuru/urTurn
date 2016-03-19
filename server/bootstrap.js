@@ -255,6 +255,7 @@ Meteor.startup(function () {
       title: "Gary Morning",
       service: morning,
       facebook: "csDBRp7CZK9St486r",
+      displayIt: true,
       createdAt: new Date(timestamp)
     });
     timestamp += 1;
@@ -262,6 +263,7 @@ Meteor.startup(function () {
       title: "Gary Evening",
       service: evening,
       facebook: "csDBRp7CZK9St486r",
+      displayIt: false,
       createdAt: new Date(timestamp)
     });
     timestamp += 1;
@@ -269,6 +271,7 @@ Meteor.startup(function () {
       title: "Robbie Morning",
       service: morning,
       facebook: "zCWcP8DPe6dqQ2t6E",
+      displayIt: true,
       createdAt: new Date(timestamp)
     });
     timestamp += 1;
