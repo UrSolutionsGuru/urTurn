@@ -4,7 +4,7 @@
 
 Template.me.helpers({
   myServices: function() {
-   // console.log('my services called');
+    // console.log('my services called');
     return Subs.find({facebook: Meteor.userId()});
   }
 });

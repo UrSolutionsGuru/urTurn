@@ -100,9 +100,11 @@ Template.urturnModal.events ({
      //console.log('Move: ' + selection + this.start);
       moveUrturn(selection, this.start, this.end);
       //alert('look at log');
-      $('.fc').fullCalendar( 'nextYear' );
-      $('.fc').fullCalendar( 'prevYear' );
+    //  $('.fc').fullCalendar( 'nextYear' );
+     // $('.fc').fullCalendar( 'prevYear' );
      // console.log('After event: '+this.title);
+     // Blaze.remove(urTurnModalViewHold); // freese up screen calling from here
+      $('#urturn_modal').modal('hide');
     }
     return false;// stop the form submit from reloading the page
   },
@@ -128,20 +130,22 @@ Template.urturnModal.events ({
         createdAt: new Date(timestamp)
       });
       Slots.update(this._id, {$set: {Hidden: true}});
-      $('.fc').fullCalendar( 'nextYear' );
-      $('.fc').fullCalendar( 'prevYear' );
+      $('#urturn_modal').modal('hide');
+      //$('.fc').fullCalendar( 'nextYear' );
+     // $('.fc').fullCalendar( 'prevYear' );
     }
   },
   'click .js-commit-me': function () {
     if (confirm('Are you sure you want to confirm this UrTurn. Once you have confirmed you will only be able to move it by swapping with another willing party')) {
       Urturns.update(this._id, {$set: {type: 'CommittedUrturn'}});
-      $('.fc').fullCalendar('nextYear');
-      $('.fc').fullCalendar('prevYear');
+      //$('.fc').fullCalendar('nextYear');
+     // $('.fc').fullCalendar('prevYear');
       Meteor.call('sendEmail',
         'alice@example.com',
         'bob@example.com',
         'Hello from Meteor!',
         'This is a test of Email.send.');
+      $('#urturn_modal').modal('hide');
 
     }
 
@@ -166,8 +170,9 @@ Template.urturnModal.events ({
       Swops.remove({_id: this._id});
 
       // Urturns.update(this._id, {$set: {type: 'CommittedUrturn'}});
-      $('.fc').fullCalendar('nextYear');
-      $('.fc').fullCalendar('prevYear');
+      $('#urturn_modal').modal('hide');
+      //$('.fc').fullCalendar('nextYear');
+      //$('.fc').fullCalendar('prevYear');
     }
 
   },
@@ -184,8 +189,9 @@ Template.urturnModal.events ({
         createdAt: new Date(timestamp)
       });
      // Slots.update(this._id, {$set: {Hidden: true}});
-      $('.fc').fullCalendar('nextYear');
-      $('.fc').fullCalendar('prevYear');
+      $('#urturn_modal').modal('hide');
+     // $('.fc').fullCalendar('nextYear');
+     //$('.fc').fullCalendar('prevYear');
     } else {
         alert('Not a CommittedUrturn');
     };
@@ -195,17 +201,8 @@ Template.urturnModal.events ({
 
 Template.urturnModal.onRendered(function(){
   var _this = this;
-
   //this will open the modal when you call it with Blaze.renderWithData
   $('#urturn_modal').modal();
-
- /* $(document.body).on('hidden.bs.modal', function () {
-    $('#urturn_modal').removeData('bs.modal');
-    console.log('data removed');
-  }); */
-
- // console.log('From inside onRender '+_this.data)//this will print the data object you pass on the event
- // console.log(this.data)//this will print the data object you pass on the event
 });
 
 Template.urturnModal.onDestroyed(function(){

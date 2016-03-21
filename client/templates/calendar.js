@@ -5,44 +5,46 @@ Template.calendar.helpers({
     events: function () {
       var fc = $('.fc');
       return function (start, end, timezone, callback) {
-        var eventHold = [];
-        console.log('user id: '+ Meteor.userId());
-        i = 0;
-        Urturns.find().forEach(function (urturn) {
-          var isEditable;
-          var setColour;
-          var isTitle;
-          var facebook;
-          if (Meteor.userId() && urturn.facebook == Meteor.userId()) {
-            isEditable = true;
-            setColour = "blue";
-            isTitle = urturn.title + ((urturn.type == 'CommittedUrturn') ? " - COMMITTED" : "");
-          } else {
-            isEditable = false;
-            setColour = "#7fff79";
-            isTitle = urturn.title + ': ' + Slots.findOne(urturn.BackRef).title;
-          };
-          eventHold[i] = {
-            id: urturn._id,
-            title: isTitle,
-            type: urturn.type,
-            borderColor: ((urturn.type == "CommittedUrturn") ? "black" : ""),
-            start: urturn.start,
-            end: urturn.end,
-            //className: ['glyphicon', 'glyphicon-ok'],
-            editable: isEditable,
-            durationEditable: false,
-            color: setColour
-          };
-          console.log("Events ran");
+        if (mySlotsHandel.ready()) {
+          var eventHold = [];
+          console.log('EVENT REFIRED - user id: '+ Meteor.userId());
+          i = 0;
+          Urturns.find().forEach(function (urturn) {
+            var isEditable;
+            var setColour;
+            var isTitle;
+            var facebook;
+            if (Meteor.userId() && urturn.facebook == Meteor.userId()) {
+              isEditable = true;
+              setColour = "blue";
+              isTitle = urturn.title + ((urturn.type == 'CommittedUrturn') ? " - COMMITTED" : "") + ' ' + urturn._id + ' ' + urturn.BackRef;
+            } else {
+              isEditable = false;
+              setColour = "#7fff79";
+              isTitle = urturn.title + ': ' + Slots.findOne(urturn.BackRef).title + ' ' + urturn._id;
+            }
+            ;
+            eventHold[i] = {
+              id: urturn._id,
+              title: isTitle,
+              type: urturn.type,
+              borderColor: ((urturn.type == "CommittedUrturn") ? "black" : ""),
+              start: urturn.start,
+              end: urturn.end,
+              //className: ['glyphicon', 'glyphicon-ok'],
+              editable: isEditable,
+              durationEditable: false,
+              color: setColour
+            };
+            // console.log("Events ran");
 
-          i++;
-        });
-        Slots.find().forEach(function (slot) {
-          if (!slot.Hidden) {
+            i++;
+          });
+          Slots.find().forEach(function (slot) {
+            // if (!slot.Hidden) {                    //IIIIIIIIIIIIIIIIIIIIIIIIIIII must put back
             eventHold[i] = {
               id: slot._id,
-              title: slot.title,
+              title: slot.title + ' ' + slot._id + ' ' + slot.Hidden,
               type: 'Slot',
               start: slot.start,
               end: slot.end,
@@ -53,9 +55,9 @@ Template.calendar.helpers({
             };
             // console.log(eventHold[i]);
             i++;
-          }
-        });
-        Swops.find().forEach(function (swop) {
+            // }
+          });
+          Swops.find().forEach(function (swop) {
 
             eventHold[i] = {
               id: swop._id,
@@ -71,9 +73,10 @@ Template.calendar.helpers({
             // console.log(eventHold[i]);
             i++;
 
-        });
+          });
 
-        callback(eventHold);
+          callback(eventHold);
+        }
 
       }
     },
@@ -116,61 +119,69 @@ Template.calendar.helpers({
     eventDrop: function () {
       var fc = $('.fc');
       return function (event, delta, revertFunc, jsEvent,ui, view) {
-        console.log(event.title + " was dropped on " + event.start.format() + ' ' + event.id + 'Delta: '+delta);
-        console.log(delta);
-        var CanDrop = false;
-        console.log('jsEvent and View');
-        console.log(jsEvent);
-        console.log(view.intervalUnit);
-        Slots.find({start: event.start.format()}).forEach(function (slot) {
-          CanDrop = true;
-        });
-        if (CanDrop) {
-
-          console.log('The Event: '+event);
-          moveUrturn(event.id, event.start.format(), event.end.format());
-
-       /*   var BackRefHold;
-          console.log('source: ' + event.source);
-          var count = 0;
-          Urturns.find({_id: event.id}).forEach(function (urturn) {
-            BackRefHold = urturn.BackRef;
-            console.log(BackRefHold + ' ' + urturn.BackRef);
-          });
-          Urturns.find({BackRef: BackRefHold}).forEach(function (turn) {
-            count++;
-          });
-          console.log(count + ' BackRefHold: ' + BackRefHold);
-
-          Urturns.find({_id: event.id}).forEach(function (urturn) {
-            Slots.find({_id: urturn.BackRef}).forEach(function (slot) {
-              if (count < 2) {
-                Slots.update(slot._id, {$set: {Hidden: false}});
-                $('.fc').fullCalendar('renderEvent', slot);
-              }
-              ;
-            });
-          });
-
-
+        if (mySlotsHandel.ready()) {
+          console.log(event.title + " was dropped on " + event.start.format() + ' ' + event.id + 'Delta: ' + delta);
+          console.log(delta);
+          var CanDrop = false;
+          console.log('jsEvent and View');
+          console.log(jsEvent);
+          console.log(view.intervalUnit);
           Slots.find({start: event.start.format()}).forEach(function (slot) {
-            console.log(slot.start + ' ' + slot._id);
+            CanDrop = true;
+          });
+          if (CanDrop) {
 
-            Urturns.update(event.id, {$set: {start: event.start.format()}});
-            Urturns.update(event.id, {$set: {end: event.end.format()}});
-            Urturns.update(event.id, {$set: {BackRef: slot._id}});
-            Slots.update(slot._id, {$set: {Hidden: true}});
-            $('.fc').fullCalendar('removeEvents', slot._id);
-          }); */
+            console.log('The Event: ' + event);
+            moveUrturn(event.id, event.start.format(), event.end.format());
 
-          $('.fc').fullCalendar('gotoDate', event.start.format());
-          $('.fc').fullCalendar('changeView', 'agendaDay')
+            /*   var BackRefHold;
+             console.log('source: ' + event.source);
+             var count = 0;
+             Urturns.find({_id: event.id}).forEach(function (urturn) {
+             BackRefHold = urturn.BackRef;
+             console.log(BackRefHold + ' ' + urturn.BackRef);
+             });
+             Urturns.find({BackRef: BackRefHold}).forEach(function (turn) {
+             count++;
+             });
+             console.log(count + ' BackRefHold: ' + BackRefHold);
 
+             Urturns.find({_id: event.id}).forEach(function (urturn) {
+             Slots.find({_id: urturn.BackRef}).forEach(function (slot) {
+             if (count < 2) {
+             Slots.update(slot._id, {$set: {Hidden: false}});
+             $('.fc').fullCalendar('renderEvent', slot);
+             }
+             ;
+             });
+             });
+
+
+             Slots.find({start: event.start.format()}).forEach(function (slot) {
+             console.log(slot.start + ' ' + slot._id);
+
+             Urturns.update(event.id, {$set: {start: event.start.format()}});
+             Urturns.update(event.id, {$set: {end: event.end.format()}});
+             Urturns.update(event.id, {$set: {BackRef: slot._id}});
+             Slots.update(slot._id, {$set: {Hidden: true}});
+             $('.fc').fullCalendar('removeEvents', slot._id);
+             }); */
+
+            $('.fc').fullCalendar('gotoDate', event.start.format());
+            $('.fc').fullCalendar('changeView', 'agendaDay');
+            mySlotsHandel.stop();
+            mySlotsHandel = Meteor.subscribe('mySlots');
+
+          }
+          else {
+            console.log('running revert');
+            revertFunc();
+          };
         }
         else {
+          console.log('running revert as not ready');
           revertFunc();
-        }
-        ;
+        };
 
 
       };
@@ -181,7 +192,7 @@ Template.calendar.helpers({
       return function (calEvent, jsEvent, view) {
 
         Session.set("holdDefaultDate",calEvent.start.format());
-        console.log('Default Date Set: '+Session.get("holdDefaultDate")+' ' +calEvent.start.format());
+       // console.log('Default Date Set: '+Session.get("holdDefaultDate")+' ' +calEvent.start.format());
         //Router.go('/');
         //Router.go('/turn/'+ calEvent.id);
         if (calEvent.type == 'Slot'){
@@ -197,21 +208,10 @@ Template.calendar.helpers({
         if (calEvent.type == 'Urturn' || calEvent.type == 'CommittedUrturn'){
           var data2 = Urturns.findOne({_id: calEvent.id});
         };
-        var data = {
+      /*  var data = {
           _id: calEvent.id
-        };
+        }; */
         urTurnModalViewHold = Blaze.renderWithData(Template.urturnModal,data2,document.body);
-
-
-
-
-        //$("#urturn_form").modal('show');
-       // alert('Event: ' + calEvent.start.format() + calEvent.id);
-        // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-        // alert('View: ' + view.name);
-
-        // change the border color just for fun
-        // $(this).css('border-color', 'red');
 
       }
     },
@@ -235,8 +235,9 @@ Template.calendar.onRendered( function (){
   Tracker.autorun(function(){
     Urturns.find().fetch();
     Subs.find().fetch();
-    console.log('THE NEW RERENDER');
+   // console.log('THE NEW RERENDER');
     $('.fc').fullCalendar( 'refetchEvents' );
+   // $('.fc').fullCalendar( 'rerenderEvents' );
   });
 });
 

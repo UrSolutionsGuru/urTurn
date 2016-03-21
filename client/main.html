@@ -31,6 +31,9 @@
                 <li><a href="#">Separated link</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">One more separated link</a></li>
+                {{#each myServices2}}
+                  <li>{{> myService2}}</li>
+                {{/each}}
 
               </ul>
             </li>
@@ -63,5 +66,16 @@
     <p></p>
   </div>
 </body>
+
+<template name="myService2">
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" checked={{displayIt}} id={{_id}}>
+      Sub: {{title}}
+    </label>
+  </div>
+
+</template>
 
 

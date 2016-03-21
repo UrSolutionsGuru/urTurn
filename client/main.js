@@ -14,14 +14,36 @@ Template.body.helpers({
       return "active";
     } else {return "";};
 
+  },
+  myServices2: function() {
+    // console.log('my services called');
+    return Subs.find({facebook: Meteor.userId()});
+  }
+});
+
+Template.body.events ({
+  'change': function (event) {   //#TGuFwFr7Zx4JfFxTq
+  //  console.log('checkbox in menu changed');
+  //  console.log(event);
+    var selection = event.target.checked;
+    var sub_id =  event.target.id;
+  //  console.log('change event '+selection+sub_id);
+    Subs.update(sub_id, {$set: {displayIt: selection}});
+    //$('.fc').fullCalendar('nextYear');
+    //$('.fc').fullCalendar('prevYear');
+    //$('.fc').fullCalendar('render');
+    mySlotsHandel.stop();
+    mySlotsHandel = Meteor.subscribe('mySlots');
+    Meteor.setTimeout(function(){
+      console.log(mySlotsHandel.ready());
+    },2000);
   }
 });
 
 
-
-Meteor.subscribe('mySlots');
+mySlotsHandel = Meteor.subscribe('mySlots');
 //Meteor.subscribe('slots');
 //Meteor.subscribe('urturns');
 //Meteor.subscribe('swops');
 
-Meteor.subscribe('subs');
+var mySubsHandel = Meteor.subscribe('subs');

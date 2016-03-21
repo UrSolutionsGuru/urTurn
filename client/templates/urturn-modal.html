@@ -18,7 +18,7 @@
                 <p>Add a New Me (a blue appoinment with your name in it) to this Slot. You can later move it to another Slot or you can Commit it, if you are prepared to be there at that time!</p>
               </div>
               <div class="col-md-3">
-                <button type="button" class="btn btn-default js-add-new-me" data-toggle="tooltip" data-placement="left" title="Hooray!" data-dismiss="modal" {{newMeButton}}>Add a new Me</button>
+                <button type="button" class="btn btn-default js-add-new-me" data-toggle="tooltip" data-placement="left" title="Hooray!"  {{newMeButton}}>Add a new Me</button>
                 <p></p>
               </div>
 
@@ -68,7 +68,7 @@
                 <p>Commit this to indicate that you are prepared to serve in this Slot, and that your planning is over!</p>
               </div>
               <div class="col-md-3">
-                <button type="button" class="btn btn-danger js-commit-me" data-dismiss="modal" {{commitMeButton}}>Commit Me</button>
+                <button type="button" class="btn btn-danger js-commit-me"  {{commitMeButton}}>Commit Me</button>
                 <p></p>
               </div>
             </div>
@@ -103,18 +103,19 @@
 
               </form>
             </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-md-9">
-                  <p>If you accept this swop, then you will be moved into the requestors Slot and your entry will be marked as Committed!</p>
-                </div>
-                <div class="col-md-3">
-                  <button type="button" class="btn btn-danger js-accept-swop" data-dismiss="modal" {{acceptSwopButton}}>Accept Swop</button>
-                </div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-9">
+                <p>If you accept this swop, then you will be moved into the requestors Slot and your entry will be marked as Committed!</p>
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-danger js-accept-swop" {{acceptSwopButton}}>Accept Swop</button>
               </div>
             </div>
-
           </div>
+
+
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 

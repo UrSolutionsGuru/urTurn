@@ -18,7 +18,7 @@ moveUrturn = function (eventId, eventStart, eventEnd){
     Slots.find({_id: urturn.BackRef}).forEach(function (slot) {
       if (count < 2) {
         Slots.update(slot._id, {$set: {Hidden: false}});
-        $('.fc').fullCalendar('renderEvent', slot);
+        $('.fc').fullCalendar('renderEvent', slot); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       }
       ;
     });
@@ -28,11 +28,18 @@ moveUrturn = function (eventId, eventStart, eventEnd){
   Slots.find({start: eventStart}).forEach(function (slot) {
     console.log(slot.start + ' ' + slot._id);
 
+  /*  Urturns.update(eventId, {
+      $set: {start: eventStart},
+      $set: {end: eventEnd},
+      $set: {BackRef: slot._id}
+    }); */
+
     Urturns.update(eventId, {$set: {start: eventStart}});
     Urturns.update(eventId, {$set: {end: eventEnd}});
     Urturns.update(eventId, {$set: {BackRef: slot._id}});
+    console.log(slot.start + ' II ' + slot._id +' '+Urturns.findOne(eventId).BackRef);
     Slots.update(slot._id, {$set: {Hidden: true}});
-    $('.fc').fullCalendar('removeEvents', slot._id);
+    $('.fc').fullCalendar('removeEvents', slot._id); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   });
 
 
