@@ -251,7 +251,7 @@ Meteor.startup(function () {
     });
     timestamp += 1;
 
-    Subs.insert ({
+  /*  Subs.insert ({
       title: "Gary Morning",
       service: morning,
       facebook: "csDBRp7CZK9St486r",
@@ -274,7 +274,7 @@ Meteor.startup(function () {
       displayIt: true,
       createdAt: new Date(timestamp)
     });
-    timestamp += 1;
+    timestamp += 1; */
 
     _.each(dataTurnSlots, function(list) {
       var slot_id = Slots.insert({title: list.title,

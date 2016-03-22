@@ -41,21 +41,21 @@ Template.calendar.helpers({
             i++;
           });
           Slots.find().forEach(function (slot) {
-            // if (!slot.Hidden) {                    //IIIIIIIIIIIIIIIIIIIIIIIIIIII must put back
-            eventHold[i] = {
-              id: slot._id,
-              title: slot.title + ' ' + slot._id + ' ' + slot.Hidden,
-              type: 'Slot',
-              start: slot.start,
-              end: slot.end,
-              backgroundColor: slot.backgroundColor,
-              borderColor: slot.borderColor,
-              textColor: slot.textColor,
-              editable: slot.editable
-            };
-            // console.log(eventHold[i]);
-            i++;
-            // }
+            if (!slot.Hidden) {                    //IIIIIIIIIIIIIIIIIIIIIIIIIIII must put back
+              eventHold[i] = {
+                id: slot._id,
+                title: slot.title + ' ' + slot._id + ' ' + slot.Hidden,
+                type: 'Slot',
+                start: slot.start,
+                end: slot.end,
+                backgroundColor: slot.backgroundColor,
+                borderColor: slot.borderColor,
+                textColor: slot.textColor,
+                editable: slot.editable
+              };
+              // console.log(eventHold[i]);
+              i++;
+            }
           });
           Swops.find().forEach(function (swop) {
 

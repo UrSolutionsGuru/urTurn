@@ -45,5 +45,6 @@ mySlotsHandel = Meteor.subscribe('mySlots');
 //Meteor.subscribe('slots');
 //Meteor.subscribe('urturns');
 //Meteor.subscribe('swops');
+// Meteor.subscribe('services');
 
 var mySubsHandel = Meteor.subscribe('subs');
