@@ -188,11 +188,12 @@ Template.urturnModal.events ({
       Meteor.call('sendEmail',
         'garyc@dac.co.za',
         'garydaccarter@gmail.com',
-        'Hello from Meteor!',
+        'Hello AGAIN from Meteor!',
         'This is a test of Email.send.');
       $('#urturn_modal').modal('hide');
      // $('.fc').fullCalendar('nextYear');
      //$('.fc').fullCalendar('prevYear');
+      return false;// stop the form submit from reloading the page
     } else {
         alert('Not a CommittedUrturn');
     };
