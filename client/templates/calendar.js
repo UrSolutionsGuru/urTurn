@@ -118,15 +118,15 @@ Template.calendar.helpers({
     },
     eventDrop: function () {
       var fc = $('.fc');
-      return function (event, delta, revertFunc, jsEvent,ui, view) {
+      return function (event, delta, revertFunc, jsEvent, ui, view) {
         if (mySlotsHandel.ready()) {
           console.log(event.title + " was dropped on " + event.start.format() + ' ' + event.id + 'Delta: ' + delta);
-          console.log(delta);
+          //console.log(delta);
           var CanDrop = false;
-          console.log('jsEvent and View');
-          console.log(jsEvent);
+          //console.log('jsEvent and View');
+          //console.log(jsEvent);
           console.log(view.intervalUnit);
-          Slots.find({start: event.start.format()}).forEach(function (slot) {
+          Slots.find({start: event.start.utc().format()}).forEach(function (slot) {
             CanDrop = true;
           });
           if (CanDrop) {
@@ -239,6 +239,7 @@ Template.calendar.onRendered( function (){
     $('.fc').fullCalendar( 'refetchEvents' );
    // $('.fc').fullCalendar( 'rerenderEvents' );
   });
+  Session.set("holdMenu", "urturn");
 });
 
 $(document).ready(function() {

@@ -59,3 +59,7 @@ Template.me.onCreated(function(){
   console.log('me created');
 
 });
+
+Template.me.onRendered(function() {
+  Session.set("holdMenu", "me");
+});

@@ -3,6 +3,12 @@
  */
 
 Template.body.helpers({
+  admin: function() {
+    if (Meteor.user().profile.name === 'Gary Carter'){ //set to garyc for now
+      return "/admin";
+    } else {return '#';};
+
+  },
   menuAdmin: function() {
     if (Session.get("holdMenu") == 'admin'){
       return "active";
@@ -18,6 +24,12 @@ Template.body.helpers({
   myServices2: function() {
     // console.log('my services called');
     return Subs.find({facebook: Meteor.userId()});
+  },
+  meTest: function() {
+    if (Session.get("holdMenu") == 'me'){
+      return "active";
+    } else {return "";};
+
   }
 });
 

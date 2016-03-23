@@ -140,11 +140,7 @@ Template.urturnModal.events ({
       Urturns.update(this._id, {$set: {type: 'CommittedUrturn'}});
       //$('.fc').fullCalendar('nextYear');
      // $('.fc').fullCalendar('prevYear');
-      Meteor.call('sendEmail',
-        'alice@example.com',
-        'bob@example.com',
-        'Hello from Meteor!',
-        'This is a test of Email.send.');
+
       $('#urturn_modal').modal('hide');
 
     }
@@ -189,6 +185,11 @@ Template.urturnModal.events ({
         createdAt: new Date(timestamp)
       });
      // Slots.update(this._id, {$set: {Hidden: true}});
+      Meteor.call('sendEmail',
+        'garyc@dac.co.za',
+        'garydaccarter@gmail.com',
+        'Hello from Meteor!',
+        'This is a test of Email.send.');
       $('#urturn_modal').modal('hide');
      // $('.fc').fullCalendar('nextYear');
      //$('.fc').fullCalendar('prevYear');

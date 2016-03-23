@@ -6,43 +6,43 @@ Meteor.startup(function () {
     var data = [
     {
       title: 'Gary Carter',
-        start: '2016-01-03T08:00:00',
-      end: '2016-01-03T09:00:00'
+        start: '2016-01-03T08:00:00+02:00',
+      end: '2016-01-03T09:00:00+02:00'
     },
     {
       title: 'Fred Astair',
-        start: '2016-01-03T08:00:00',
-      end: '2016-01-03T09:00:00'
+        start: '2016-01-03T08:00:00+02:00',
+      end: '2016-01-03T09:00:00+02:00'
     },
     {
       title: 'Gavin Carter',
-        start: '2016-01-03T10:00:00',
-      end: '2016-01-03T11:00:00'
+        start: '2016-01-03T10:00:00+02:00',
+      end: '2016-01-03T11:00:00+02:00'
     },
     {
       title: 'Jack Astair',
-        start: '2016-01-03T10:00:00',
-      end: '2016-01-03T11:00:00'
+        start: '2016-01-03T10:00:00+02:00',
+      end: '2016-01-03T11:00:00+02:00'
     },
     {
       title: 'Kirsty Carter',
-        start: '2016-01-03T16:00:00',
-      end: '2016-01-03T17:00:00'
+        start: '2016-01-03T16:00:00+02:00',
+      end: '2016-01-03T17:00:00+02:00'
     },
     {
       title: 'Alice Astair',
-        start: '2016-01-03T16:00:00',
-      end: '2016-01-03T17:00:00'
+        start: '2016-01-03T16:00:00+02:00',
+      end: '2016-01-03T17:00:00+02:00'
     },
     {
       title: 'Tracey Carter',
-        start: '2016-01-03T18:00:00',
-      end: '2016-01-03T19:00:00'
+        start: '2016-01-03T18:00:00+02:00',
+      end: '2016-01-03T19:00:00+02:00'
     },
     {
       title: 'Bob Astair',
-        start: '2016-01-03T18:00:00',
-      end: '2016-01-03T19:00:00'
+        start: '2016-01-03T18:00:00+02:00',
+      end: '2016-01-03T19:00:00+02:00'
     }
     ];
 
@@ -50,8 +50,8 @@ Meteor.startup(function () {
       {
         id: 1,
         title: 'Morning Service',
-        start: '2016-01-10T08:00:00',
-        end: '2016-01-10T09:00:00',
+        start: '2016-01-10T08:00:00+02:00',
+        end: '2016-01-10T09:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -60,8 +60,8 @@ Meteor.startup(function () {
       {
         id: 2,
         title: 'Morning Service',
-        start: '2016-01-10T10:00:00',
-        end: '2016-01-10T11:00:00',
+        start: '2016-01-10T10:00:00+02:00',
+        end: '2016-01-10T11:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -70,8 +70,8 @@ Meteor.startup(function () {
       {
         id: 3,
         title: 'Evening Service',
-        start: '2016-01-10T16:00:00',
-        end: '2016-01-10T17:00:00',
+        start: '2016-01-10T16:00:00+02:00',
+        end: '2016-01-10T17:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -80,8 +80,8 @@ Meteor.startup(function () {
       {
         id: 4,
         title: 'Evening Service',
-        start: '2016-01-10T18:00:00',
-        end: '2016-01-10T19:00:00',
+        start: '2016-01-10T18:00:00+02:00',
+        end: '2016-01-10T19:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -90,8 +90,8 @@ Meteor.startup(function () {
       {
         id: 1,
         title: 'Morning Service',
-        start: '2016-01-17T08:00:00',
-        end: '2016-01-17T09:00:00',
+        start: '2016-01-17T08:00:00+02:00',
+        end: '2016-01-17T09:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -100,8 +100,8 @@ Meteor.startup(function () {
       {
         id: 2,
         title: 'Morning Service',
-        start: '2016-01-17T10:00:00',
-        end: '2016-01-17T11:00:00',
+        start: '2016-01-17T10:00:00+02:00',
+        end: '2016-01-17T11:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -110,8 +110,8 @@ Meteor.startup(function () {
       {
         id: 3,
         title: 'Evening Service',
-        start: '2016-01-17T16:00:00',
-        end: '2016-01-17T17:00:00',
+        start: '2016-01-17T16:00:00+02:00',
+        end: '2016-01-17T17:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -120,8 +120,8 @@ Meteor.startup(function () {
       {
         id: 4,
         title: 'Evening Service',
-        start: '2016-01-17T18:00:00',
-        end: '2016-01-17T19:00:00',
+        start: '2016-01-17T18:00:00+02:00',
+        end: '2016-01-17T19:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -132,8 +132,8 @@ Meteor.startup(function () {
     var dataTurnSlots = [
       {
         title: 'Morning Service',
-        start: '2016-01-10T08:00:00',
-        end: '2016-01-10T09:00:00',
+        start: '2016-01-10T08:00:00+02:00',
+        end: '2016-01-10T09:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -146,8 +146,8 @@ Meteor.startup(function () {
       },
       {
         title: 'Morning Service',
-        start: '2016-01-10T10:00:00',
-        end: '2016-01-10T11:00:00',
+        start: '2016-01-10T10:00:00+02:00',
+        end: '2016-01-10T11:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -164,8 +164,8 @@ Meteor.startup(function () {
       },
       {
         title: 'Evening Service',
-        start: '2016-01-10T16:00:00',
-        end: '2016-01-10T17:00:00',
+        start: '2016-01-10T16:00:00+02:00',
+        end: '2016-01-10T17:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -174,8 +174,8 @@ Meteor.startup(function () {
       },
       {
         title: 'Evening Service',
-        start: '2016-01-10T18:00:00',
-        end: '2016-01-10T19:00:00',
+        start: '2016-01-10T18:00:00+02:00',
+        end: '2016-01-10T19:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -191,8 +191,8 @@ Meteor.startup(function () {
       },
       {
         title: 'Morning Service',
-        start: '2016-01-17T08:00:00',
-        end: '2016-01-17T09:00:00',
+        start: '2016-01-17T08:00:00+02:00',
+        end: '2016-01-17T09:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -204,8 +204,8 @@ Meteor.startup(function () {
       },
       {
         title: 'Morning Service',
-        start: '2016-01-17T10:00:00',
-        end: '2016-01-17T11:00:00',
+        start: '2016-01-17T10:00:00+02:00',
+        end: '2016-01-17T11:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -214,8 +214,8 @@ Meteor.startup(function () {
       },
       {
         title: 'Evening Service',
-        start: '2016-01-17T16:00:00',
-        end: '2016-01-17T17:00:00',
+        start: '2016-01-17T16:00:00+02:00',
+        end: '2016-01-17T17:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -224,8 +224,8 @@ Meteor.startup(function () {
       },
       {
         title: 'Evening Service',
-        start: '2016-01-17T18:00:00',
-        end: '2016-01-17T19:00:00',
+        start: '2016-01-17T18:00:00+02:00',
+        end: '2016-01-17T19:00:00+02:00',
         backgroundColor: 'white',
         borderColor: 'black',
         textColor: 'grey',
@@ -279,8 +279,8 @@ Meteor.startup(function () {
     _.each(dataTurnSlots, function(list) {
       var slot_id = Slots.insert({title: list.title,
         type: 'Slot',
-        start: moment(list.start).format(),
-        end: moment(list.end).format(),
+        start: moment(list.start).utc().format(),
+        end: moment(list.end).utc().format(),
         backgroundColor: list.backgroundColor,
         borderColor: list.borderColor,
         textColor: list.textColor,
@@ -293,8 +293,8 @@ Meteor.startup(function () {
           Urturns.insert({title: aturn.title,
             type: 'Urturn',
             user: aturn.user,
-            start: moment(list.start).format(),
-            end: moment(list.end).format(),
+            start: moment(list.start).utc().format(),
+            end: moment(list.end).utc().format(),
             facebook: aturn.facebook,
             BackRef : slot_id,
             createdAt: new Date(timestamp)

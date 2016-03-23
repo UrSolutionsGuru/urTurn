@@ -6,8 +6,8 @@ Meteor.methods({
     Slots.remove({});
     Urturns.remove({});
     Swops.remove({});
-    Services.remove({});
-    Subs.remove({});
+   // Services.remove({});
+   // Subs.remove({});
   },
   sendEmail: function (to, from, subject, text) {
    //? check([to, from, subject, text], [String]);
@@ -32,15 +32,15 @@ Meteor.methods({
     var evening = Services.findOne({title: "Evening Services"})._id;
 
     var slotTitles = [
-      {title: 'Morning Service', start: '2016-01-24T08:00:00'},
-      {title: 'Morning Service', start: '2016-01-24T10:00:00'},
-      {title: 'Evening Service', start: '2016-01-24T16:00:00'},
-      {title: 'Evening Service', start: '2016-01-24T18:00:00'}
+      {title: 'Morning Service', start: '2016-01-24T08:00:00+02:00'},
+      {title: 'Morning Service', start: '2016-01-24T10:00:00+02:00'},
+      {title: 'Evening Service', start: '2016-01-24T16:00:00+02:00'},
+      {title: 'Evening Service', start: '2016-01-24T18:00:00+02:00'}
     ];
 
     _.each(slotTitles, function(list) {
 
-      var startTime = moment(list.start);
+      var startTime = moment(list.start).utc();
       var endTime = moment(startTime).add(1,'h');
       for (i = 0; i < addNumber; i++) {
         Slots.insert({
