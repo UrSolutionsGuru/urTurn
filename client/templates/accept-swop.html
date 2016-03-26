@@ -1,0 +1,73 @@
+<template name="acceptSwop">
+  <div class="container">
+    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Swop Requests</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each mySwops}}
+                  {{> mySwop}}
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Adverts</div>
+          <div class="panel-body">
+            <p>Advert here</p>
+            <p>Advert here</p>
+            <p>Advert here</p>
+            <p>Advert here</p>
+            <p>Advert here</p>
+            <p>Advert here</p>
+            <p>Advert here</p>
+            <p>Advert here</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+    <div class="row">
+      <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+      <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+      <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+    </div>
+
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row">
+      <div class="col-xs-6">.col-xs-6</div>
+      <div class="col-xs-6">.col-xs-6</div>
+    </div>
+  </div>
+</template>
+
+<template name="mySwop">
+  <tr>
+    <td>
+      <div class="row">
+        <div class="col-xs-8">
+          <div><p>{{title}} {{BackFromRef}} {{BackToRef}} January sdgf sgsdf sdfgsdfg tew dfbsdfg srtsr fxsdf sdfgsfg sdfgsdg sdfgsdfg dsfgsdfg sdfgsdfgsdfg dsfgsdfg sdfgdsfg</p></div>
+        </div>
+        <div class="col-xs-4">
+          <div class="pull-right">
+            <button type="button" class="btn btn-primary {{_id}}A" data-toggle="tooltip" data-placement="left" title="Hooray!"  {{newMeButton}}>Accept</button>
+            <button type="button" class="btn btn-default {{_id}}D" data-toggle="tooltip" data-placement="left" title="Decline Swop - Requestor will be notified"  {{newMeButton}}>Decline</button>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+</template>

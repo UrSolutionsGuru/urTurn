@@ -15,6 +15,13 @@ Template.body.helpers({
     } else {return "";};
 
   },
+
+  menuAcceptSwop: function() {
+    if (Session.get("holdMenu") == 'acceptSwop'){
+      return "active";
+    } else {return "";};
+
+  },
   menuTest: function() {
     if (Session.get("holdMenu") == 'test'){
       return "active";
