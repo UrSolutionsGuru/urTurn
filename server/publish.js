@@ -68,3 +68,13 @@ Meteor.publish("subs", function (){
   //console.log('Republishing SUBS');
   return Subs.find({facebook: this.userId});
 });
+
+Meteor.publish("userData", function () {
+ /* if (this.userId) {
+    return Meteor.users.find({_id: this.userId},
+      {fields: {'other': 1, 'things': 1}});
+  } else {
+    this.ready();
+  }*/
+  return Meteor.users.find({}); //close up to a few fields later !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+});
