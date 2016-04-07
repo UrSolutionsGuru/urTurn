@@ -2,8 +2,8 @@
   <title>Title</title>
 </head>
 <body>
-  <div class="container">
-    <nav class="navbar navbar-default">
+ <div class="container-fluid">
+    <nav class="navbar navbar-default ">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -13,24 +13,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand {{menuTest}}" href="/">urTurn</a>
+          <a class="navbar-brand" href="/">AbacuZ</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class={{meTest}}><a href="/me">Me</a></li>
-            <li class={{menuTest}}><a href="/test">Test</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Subs<span class="caret"></span></a>
+            <li class={{menuOne}}><a href="/one">One</a></li>
+
+
+            <!-- keep all uturns here for now -->
+            <li class="dropdown {{menuUrturn}}">
+              <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" >urTurn<span class="caret"></span></a>
               <ul class="dropdown-menu">
-               <!-- <li><a href="/admin">Admin</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
+                <li class={{menuCalendar}}><a href="/calendar">Calendar</a></li>
+                <li class={{meTest}}><a href="/me">Me</a></li>
+                <li class={{menuTest}}><a href="/test">Test</a></li>
+                <li class={{menuAcceptSwop}}><a href="/acceptSwop" >Swop</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">One more separated link</a></li> -->
                 {{#each myServices2}}
                   <li>{{> myService2}}</li>
                 {{/each}}
@@ -46,26 +46,19 @@
           </form> -->
           <ul class="nav navbar-nav navbar-right">
             <li class={{menuAdmin}}><a href="{{admin}}" >Admin</a></li>
-            <li class={{menuAcceptSwop}}><a href="/acceptSwop" >Swop</a></li>
-           <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li> -->
             <li><a href="#">{{> loginButtons}}</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
 
+   <ol class="breadcrumb">
+     <li><a href="#">Home</a></li>
+     <li><a href="#">Library</a></li>
+     <li class="active">Data</li>
+   </ol>
 
-    <p></p>
-  </div>
+ </div>
 </body>
 
 <template name="myService2">

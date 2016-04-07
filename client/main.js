@@ -37,6 +37,27 @@ Template.body.helpers({
       return "active";
     } else {return "";};
 
+  },
+  menuUrturn: function() {
+    if (Session.get("holdMenu") == 'me' ||
+        Session.get("holdMenu") == 'acceptSwop' ||
+        Session.get("holdMenu") == 'test' ||
+        Session.get("holdMenu") == 'urturn'){
+      return "active";
+    } else {return "";};
+
+  },
+  menuCalendar: function() {
+    if (Session.get("holdMenu") == 'urturn'){
+      return "active";
+    } else {return "";};
+
+  },
+  menuOne: function() {
+    if (Session.get("holdMenu") == 'one'){
+      return "active";
+    } else {return "";};
+
   }
 });
 
