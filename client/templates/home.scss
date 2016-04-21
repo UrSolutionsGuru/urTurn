@@ -1,0 +1,5 @@
+$gary-align: center;
+
+.gary {
+  display: flex; align-items: $gary-align; justify-content: $gary-align;
+}

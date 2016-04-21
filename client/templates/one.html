@@ -6,10 +6,23 @@
         <div class="panel panel-default">
 
           <div class="panel-body">
-            <span>One Logged on</span>
+            <b>Select the Service you want to Respond to:</b>
+            {{> TreeView treeArgs }}
+
+
+
+
           </div>
         </div>
       </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="panel panel-default">
+          <!-- <input type="text" class="form-control" id="my-datepicker"> -->
+          <div id="my-datepicker"></div>
+          <input type="text" id="my_hidden_input">
+        </div>
+      </div>
+
     </div>
   </div>
 </template>

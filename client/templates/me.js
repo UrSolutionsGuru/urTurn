@@ -63,3 +63,4 @@ Template.me.onCreated(function(){
 Template.me.onRendered(function() {
   Session.set("holdMenu", "me");
 });
+

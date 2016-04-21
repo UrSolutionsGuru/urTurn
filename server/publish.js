@@ -78,3 +78,7 @@ Meteor.publish("userData", function () {
   }*/
   return Meteor.users.find({}); //close up to a few fields later !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 });
+
+Meteor.publish('TreeData', function() {
+  return TreeData.find();
+});
