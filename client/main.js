@@ -58,6 +58,32 @@ Template.body.helpers({
       return "active";
     } else {return "";};
 
+  },
+  treeArgs: {
+    collection: TreeData,
+    subscription: 'TreeData',
+    mapping: {
+      text: 'name'
+
+    },
+    events: {
+      changed: function (e, item) {
+        console.log("Item " + item + "selected.");
+      }
+    },
+    jstree: {
+
+      checkbox: {whole_node: false, keep_selected_style: false, three_state: false},
+      plugins: [
+        "checkbox",
+        //"contextmenu",
+        //"dnd",
+        // "sort",
+        "state"
+
+      ],
+      core: {multiple: false}
+    }
   }
 });
 

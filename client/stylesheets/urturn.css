@@ -2,4 +2,12 @@
 .fc-state-highlight {background: #ebfffc;}
 
 
+
+#my-datepicker {
+    border: thin;
+    width: 250px;
+    float: none;
+    padding-left: 5px;
+}
+
 /* see if VCS takes this */

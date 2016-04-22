@@ -1,0 +1,57 @@
+<template name="addResponse">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-9">
+
+        <table>
+        <tr>
+          <th class="input-text"><label>Service</label></th>
+          <th class="input-box">
+            <div class="input-group">
+              <input type="text" class="form-control">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color: #f8f8f8;">&nbsp; <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li>{{> TreeView treeArgs }}</li>
+
+                </ul>
+              </div><!-- /btn-group -->
+            </div><!-- /input-group -->
+          </th>
+        </tr>
+      </table>
+
+        <table>
+          <tr>
+            <th class="input-text"><label>Date</label></th>
+            <th class="input-box">
+              <div id="addResponse-datepicker">
+                <div class="input-group date">
+                  <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <th class="input-text"><label>Slot</label></th>
+            <th class="input-box">
+              <div class="input-group">
+                <input type="text" class="form-control">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color: #f8f8f8;">&nbsp; <span class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li>8:00am</li>
+                    <li>9:00am</li>
+                    <li>10:00am</li>
+                  </ul>
+                </div><!-- /btn-group -->
+              </div><!-- /input-group -->
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,29 +1,61 @@
 <template name="oneMine">
   <div class="container-fluid">
+
+    <div style="border: dashed; overflow: auto">
     <!-- Stack the columns on mobile by making one full-width and the other half-width -->
-    <div class="row">
-      <div class="col-xs-12 col-md-8">
+
+      <div style="float: left; padding-right: 15px;">
         <div class="panel panel-default">
-
+          <div class="panel-heading">Select the Service that you want to Respond to:</div>
           <div class="panel-body">
-            <b>Select the Service you want to Respond to:</b>
             {{> TreeView treeArgs }}
-
-
-
-
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-md-4">
+      <div style="float: left; padding-right: 15px;">
         <div class="panel panel-default">
-          <!-- <input type="text" class="form-control" id="my-datepicker"> -->
-          <div id="my-datepicker"></div>
-          <input type="text" id="my_hidden_input">
+          <div class="panel-heading">and Select the Date:</div>
+          <div class="panel-body">
+            <div id="my-datepicker" ></div>
+            <input type="text" id="my_hidden_input">
+          </div>
         </div>
       </div>
-
     </div>
+
+
+
+<div style="border: dotted; float: none; overflow: auto">
+    <table class="table table-bordered" style="width: 350px;">
+      <tr>
+        <th>
+          <b>Select the Service that you want to Respond to:</b>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          {{> TreeView treeArgs }}
+        </td>
+      </tr>
+    </table>
+
+    <table class="table table-bordered" style="width: 350px; float: left">
+      <tr>
+        <th>
+          <b>and Select the Date:</b>
+        </th>
+      </tr>
+      <tr>
+        <td>
+
+        </td>
+      </tr>
+    </table>
+
+</div>
+
+<p style="float: none;">fred face</p>
+
   </div>
 </template>
 
