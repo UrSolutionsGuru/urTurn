@@ -240,13 +240,53 @@ Meteor.startup(function () {
     var timestamp = (new Date()).getTime();
 
     console.log('starting to load');
+
+    var org = Orgs.insert({
+      title: "Bryanston Bible Church",
+      createdAt: new Date(timestamp)
+    });
+    timestamp += 1;
+    
     var morning = Services.insert({
       title: "Morning Services",
+      org: org,
       createdAt: new Date(timestamp)
     });
     timestamp += 1;
     var evening = Services.insert({
       title: "Evening Services",
+      org: org,
+      createdAt: new Date(timestamp)
+    });
+    timestamp += 1;
+    var evening = Services.insert({
+      title: "Systems Room",
+      org: org,
+      createdAt: new Date(timestamp)
+    });
+    timestamp += 1;
+
+    var org = Orgs.insert({
+      title: "Dac Systems",
+      createdAt: new Date(timestamp)
+    });
+    timestamp += 1;
+
+    var morning = Services.insert({
+      title: "Black Boardroom",
+      org: org,
+      createdAt: new Date(timestamp)
+    });
+    timestamp += 1;
+    var evening = Services.insert({
+      title: "Morning Boardroom",
+      org: org,
+      createdAt: new Date(timestamp)
+    });
+    timestamp += 1;
+    var evening = Services.insert({
+      title: "Bryanston Boardroom",
+      org: org,
       createdAt: new Date(timestamp)
     });
     timestamp += 1;

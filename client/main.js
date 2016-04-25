@@ -114,3 +114,4 @@ mySlotsHandel = Meteor.subscribe('mySlots');
 // Meteor.subscribe('services');
 
 var mySubsHandel = Meteor.subscribe('subs');
+Meteor.subscribe('Orgs');

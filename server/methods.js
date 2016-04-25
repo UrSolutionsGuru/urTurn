@@ -6,8 +6,9 @@ Meteor.methods({
     Slots.remove({});
     Urturns.remove({});
     Swops.remove({});
-   // Services.remove({});
-   // Subs.remove({});
+    Services.remove({});
+    Subs.remove({});
+    Orgs.remove({});
   },
   sendEmail: function (to, from, subject, text) {
    //? check([to, from, subject, text], [String]);
@@ -102,6 +103,14 @@ Meteor.methods({
 
     TreeData.remove({});
     insertTestData(null, testData);
+  },
+  makeServiceTree(){
+
+    ServiceTree.remove({});
+    let id = ServiceTree.insert({name: 'BBC', parent: null});
+    ServiceTree.insert({name: 'Morning Service', parent: id});
+    ServiceTree.insert({name: 'Evening Service', parent: id});
+    
   }
 
 });

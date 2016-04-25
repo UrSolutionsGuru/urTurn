@@ -82,3 +82,11 @@ Meteor.publish("userData", function () {
 Meteor.publish('TreeData', function() {
   return TreeData.find();
 });
+
+Meteor.publish('ServiceTree', function() {
+  return ServiceTree.find();
+});
+
+Meteor.publish('Orgs', function() {
+  return Orgs.find();
+});

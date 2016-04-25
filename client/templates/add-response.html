@@ -3,23 +3,41 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-9">
 
-        <table>
-        <tr>
-          <th class="input-text"><label>Service</label></th>
-          <th class="input-box">
-            <div class="input-group">
-              <input type="text" class="form-control">
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color: #f8f8f8;">&nbsp; <span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                  <li>{{> TreeView treeArgs }}</li>
+        <form class="js-addResponse-query-form"><table>
+          <tr>
+            <th class="input-text"><label>Query</label></th>
+            <th class="input-box ">
+              <div class="input-group ">
+                <input type="text" class="form-control" id="serviceQueryText" value={{serviceQuery}}>
+                <div class="input-group-btn">
+                  <button type="submit" class="btn btn-default"  style="background-color: #f8f8f8;">@</button>
 
-                </ul>
-              </div><!-- /btn-group -->
-            </div><!-- /input-group -->
-          </th>
-        </tr>
-      </table>
+                </div><!-- /btn-group -->
+              </div><!-- /input-group -->
+            </th>
+          </tr>
+        </table></form>
+
+        <table>
+          <tr>
+            <th class="input-text"><label>Service</label></th>
+            <th class="input-box">
+              <div class="input-group">
+                <input type="text" class="form-control">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color: #f8f8f8;">&nbsp; <span class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <!-- <li>{{> TreeView treeArgs }}</li> -->
+                    {{#each myServices}}
+                      <li>{{> myOrgService}}</li>
+                    {{/each}}
+
+                  </ul>
+                </div><!-- /btn-group -->
+              </div><!-- /input-group -->
+            </th>
+          </tr>
+        </table>
 
         <table>
           <tr>
@@ -54,4 +72,15 @@
       </div>
     </div>
   </div>
+</template>
+
+<template name="myOrgService">
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" checked={{displayIt}} id={{_id}}>
+      {{org}}: {{title}}
+    </label>
+  </div>
+
 </template>
