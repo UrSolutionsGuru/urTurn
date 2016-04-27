@@ -31,16 +31,19 @@ Template.addResponse.helpers({
       core: {multiple: false}
     }
   },
+  pullDownCount: function(){
+    return Session.get("holdPullDownCount");
+  },
   myServices: function() {
     if (orgsSubscribe.ready()) {
       let workForm = Session.get("ServiceQuery");
 
-     // let workForm = 'black Org:(dac systems) board';
-      let orgTextStart = 2;
-      let orgTextEnd = 2;
-      let orgReg = /\bOrg:\(/ig
-      let restBracket= /.*\)/ig
-      let orgHold = 'fred';
+     // first extract anything to do with Org:
+      let orgTextStart = 0;
+      let orgTextEnd = 0;
+      let orgReg = /\bOrg:\(/ig;
+      let restBracket= /.*\)/ig;
+      let orgHold = 'string';
       console.log(orgReg);
       if (orgReg.test(workForm)) {
         restBracket.lastIndex = orgReg.lastIndex;
@@ -54,17 +57,39 @@ Template.addResponse.helpers({
       console.log(orgTextStart+":"+orgTextEnd);
 
       var res = workForm.substr(0, orgTextStart);
-      console.log(res);
       var res2 = workForm.substr(orgTextEnd, workForm.length);
-      console.log(res2);
       var res3 = res.concat(" ", res2);
       console.log(res3);
      // Session.set("ServiceQuery", res3);
 
-      let serviceQuery = res3;
+      //Now extract Ser:( as the service string works with all this and everything outside any backets
+      let serTextStart = 0;
+      let serTextEnd = 0;
+      let serReg = /\bSer:\(/ig;
+      let serHold = 'string';
+      console.log(serReg);
+      if (serReg.test(res3)) {
+        //restBracket.lastIndex = orgReg.lastIndex;
+        serTextStart = serReg.lastIndex - 5;
+       // orgHold = restBracket.exec(workForm);
+        serTextEnd = serReg.lastIndex;
+        //console.log(orgHold);
+      }
+     // Session.set("OrgQuery", orgHold);
+
+      console.log(serTextStart+":"+serTextEnd);
+
+      var sres = res3.substr(0, serTextStart);
+      var sres2 = res3.substr(serTextEnd, res3.length);
+      var sres3 = sres.concat(" ", sres2);
+      console.log(sres3);
+
+      let serviceQuery = sres3;
+
+      //Now parse for Org: stuff
      // let serviceQuery = Session.get("ServiceQuery");
       let orgQuery = Session.get("OrgQuery");
-      let pq = /\b\w*\b/ig
+      let pq = /\b\w*\b/ig;
       let orgArray = [];
       let fred = {$and: []};
       let textHold = [];
@@ -133,12 +158,25 @@ Template.addResponse.helpers({
           }
         }
       }
-      if (textCount == 0) {
-        return Services.find({org: {$in: orgArray}});
+      if (_.isEmpty(orgArray)) {
+        if (textCount == 0) {
+          Session.set("holdPullDownCount", Services.find({}).count());
+          return Services.find({});
+        }
+        //fred['$and'].push({org: {$in: orgArray}});
+        console.log(fred);
+        Session.set("holdPullDownCount", Services.find(fred).count());
+        return Services.find(fred);
+      } else {
+        if (textCount == 0) {
+          Session.set("holdPullDownCount", Services.find({org: {$in: orgArray}}).count());
+          return Services.find({org: {$in: orgArray}});
+        }
+        fred['$and'].push({org: {$in: orgArray}});
+        console.log(fred);
+        Session.set("holdPullDownCount", Services.find(fred).count());
+        return Services.find(fred);
       }
-      fred['$and'].push({org: {$in: orgArray}});
-      console.log(fred);
-      return Services.find(fred);
     } /* else {
       return {one: null};
     } */
