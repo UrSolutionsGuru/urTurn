@@ -44,22 +44,22 @@ Template.addResponse.helpers({
       let orgReg = /\bOrg:\(/ig;
       let restBracket= /.*\)/ig;
       let orgHold = 'string';
-      console.log(orgReg);
+      //console.log(orgReg);
       if (orgReg.test(workForm)) {
         restBracket.lastIndex = orgReg.lastIndex;
         orgTextStart = restBracket.lastIndex - 5;
         orgHold = restBracket.exec(workForm);
         orgTextEnd = restBracket.lastIndex;
-        console.log(orgHold);
+        //console.log(orgHold);
       }
       Session.set("OrgQuery", orgHold);
 
-      console.log(orgTextStart+":"+orgTextEnd);
+      //console.log(orgTextStart+":"+orgTextEnd);
 
       var res = workForm.substr(0, orgTextStart);
       var res2 = workForm.substr(orgTextEnd, workForm.length);
       var res3 = res.concat(" ", res2);
-      console.log(res3);
+      //console.log(res3);
      // Session.set("ServiceQuery", res3);
 
       //Now extract Ser:( as the service string works with all this and everything outside any backets
@@ -67,7 +67,7 @@ Template.addResponse.helpers({
       let serTextEnd = 0;
       let serReg = /\bSer:\(/ig;
       let serHold = 'string';
-      console.log(serReg);
+      //console.log(serReg);
       if (serReg.test(res3)) {
         //restBracket.lastIndex = orgReg.lastIndex;
         serTextStart = serReg.lastIndex - 5;
@@ -77,12 +77,12 @@ Template.addResponse.helpers({
       }
      // Session.set("OrgQuery", orgHold);
 
-      console.log(serTextStart+":"+serTextEnd);
+      //console.log(serTextStart+":"+serTextEnd);
 
       var sres = res3.substr(0, serTextStart);
       var sres2 = res3.substr(serTextEnd, res3.length);
       var sres3 = sres.concat(" ", sres2);
-      console.log(sres3);
+      //console.log(sres3);
 
       let serviceQuery = sres3;
 
@@ -97,24 +97,24 @@ Template.addResponse.helpers({
       let moreText = true;
       while (moreText) {
         textHold = pq.exec(orgQuery);
-        console.log(textCount);
-        console.log(textHold);
+        //console.log(textCount);
+        //console.log(textHold);
         if (_.isEmpty(textHold)) {
-          console.log('ORG in side textHold empty');
+          //console.log('ORG in side textHold empty');
           moreText = false;
         } else {
           if (_.isEmpty(textHold[0])) {
-            console.log('ORGin side textHold[0] empty');
+            //console.log('ORGin side textHold[0] empty');
             moreText = false;
           } else {
-            console.log('ORG in side');
+            //console.log('ORG in side');
             fred['$and'].push({title: {$regex: textHold[0], $options: 'i'}});
             pq.lastIndex++;
             textCount++;
           }
         }
       }
-      console.log(fred);
+      //console.log(fred);
       if (textCount == 0) {
         //orgArray = ['yezN93Sp6ktGM4x34','HdTRTrGqvHe9LHYsn'];
         var j = 0;
@@ -130,7 +130,7 @@ Template.addResponse.helpers({
         });
       }                                              //need to catour for words that dont match and an emprty array
 
-      console.log(orgArray);
+      //console.log(orgArray);
 
 
       //orgArray = ['yezN93Sp6ktGM4x34','HdTRTrGqvHe9LHYsn'];
@@ -141,30 +141,31 @@ Template.addResponse.helpers({
       moreText = true;
       while (moreText) {
         textHold = pq.exec(serviceQuery);
-        console.log(textCount);
-        console.log(textHold);
+        //console.log(textCount);
+        //console.log(textHold);
         if (_.isEmpty(textHold)) {
-          console.log('in side textHold empty');
+          //console.log('in side textHold empty');
           moreText = false;
         } else {
           if (_.isEmpty(textHold[0])) {
-            console.log('in side textHold[0] empty');
+            //console.log('in side textHold[0] empty');
             moreText = false;
           } else {
-            console.log('in side');
+            //console.log('in side');
             fred['$and'].push({title: {$regex: textHold[0], $options: 'i'}});
             pq.lastIndex++;
             textCount++;
           }
         }
       }
+      
       if (_.isEmpty(orgArray)) {
         if (textCount == 0) {
           Session.set("holdPullDownCount", Services.find({}).count());
           return Services.find({});
         }
         //fred['$and'].push({org: {$in: orgArray}});
-        console.log(fred);
+        //console.log(fred);
         Session.set("holdPullDownCount", Services.find(fred).count());
         return Services.find(fred);
       } else {
@@ -173,7 +174,7 @@ Template.addResponse.helpers({
           return Services.find({org: {$in: orgArray}});
         }
         fred['$and'].push({org: {$in: orgArray}});
-        console.log(fred);
+        //console.log(fred);
         Session.set("holdPullDownCount", Services.find(fred).count());
         return Services.find(fred);
       }
@@ -222,9 +223,33 @@ Template.myOrgService.helpers({
 Template.addResponse.events ({
   "submit .js-addResponse-query-form":function(event) {
     Session.set("ServiceQuery", event.target.serviceQueryText.value);
+
+    //$('#testtesttest').submit();
+
     return false;// stop the form submit from reloading the page
+  },
+  "submit .js-service-select-query-form":function(event) {
+    console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHit");
+    //console.log(event);
+    var selection = event.target.select_from2.value;
+    //console.log(selection);
+    console.log(Services.findOne({_id: selection}).title);
+    return false;// stop the form submit from reloading the page
+  },
+  "change #select_from2":function(event) {
+    console.log("STTTTTTTTTTTTTTTTTTTTTTTTTTSit");
+    console.log(event);
+    $('#testtesttest').submit();
+  },
+  "keyup #serviceQueryText":function(event) {
+
+    $('#keyByKey').submit();
   }
+
+
 });
+
+
 
 Template.addResponse.onRendered(function() {
   Session.set("holdMenu", "addResponse");

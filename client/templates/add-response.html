@@ -3,44 +3,49 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-9">
 
-        <form class="js-addResponse-query-form"><table>
+        <form class="js-addResponse-query-form" id="keyByKey"><table>
           <tr>
             <th class="input-text"><label>Query</label></th>
             <th class="input-box ">
               <div class="input-group ">
                 <input type="text" class="form-control" id="serviceQueryText" value={{serviceQuery}}>
                 <div class="input-group-btn">
-                  <button type="submit" class="btn btn-default"  style="background-color: #f8f8f8;">@</button>
-
+                  <button type="submit" class="btn btn-default"  style="background-color: #f8f8f8;">
+                    <span class="text-danger small"><small>{{pullDownCount}}&nbsp;</small></span>@
+                  </button>
                 </div><!-- /btn-group -->
               </div><!-- /input-group -->
             </th>
           </tr>
         </table></form>
 
-        <table>
+        <form class="js-service-select-query-form" id="testtesttest"><table>
           <tr>
             <th class="input-text"><label>Service</label></th>
             <th class="input-box">
-              <div class="input-group">
-                <input type="text" class="form-control">
-                <div class="input-group-btn">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-color: #f8f8f8;">
-                    <span class="text-danger small"><small>{{pullDownCount}}</small></span>
+              <div class="form-group">
 
-                    <span class="caret"></span></button>
-                  <ul class="dropdown-menu dropdown-menu-right">
+
+                 <!-- <ul class="dropdown-menu dropdown-menu-right"> -->
                     <!-- <li>{{> TreeView treeArgs }}</li> -->
-                    {{#each myServices}}
+                    <!-- {{#each myServices}}
                       <li>{{> myOrgService}}</li>
                     {{/each}}
 
-                  </ul>
-                </div><!-- /btn-group -->
-              </div><!-- /input-group -->
+                  </ul> -->
+                  <select class="form-control" id="select_from2">
+                    <!-- <option value="undefined" selected></option> -->
+                    {{#each myServices}}
+                      <option value={{_id}}>{{> myOrgService}}</option>
+                    {{/each}}
+                  </select>
+
+
+
+              </div>
             </th>
           </tr>
-        </table>
+        </table></form>
 
         <table>
           <tr>
@@ -54,6 +59,7 @@
             </th>
           </tr>
         </table>
+
         <table>
           <tr>
             <th class="input-text"><label>Slot</label></th>
