@@ -4,6 +4,8 @@
 
  //var serviceQuery = 'mo';
 
+var ServiceChangedReactiveVar = new ReactiveVar(1);
+
 Template.addResponse.helpers({
   treeArgs: {
     collection: ServiceTree,
@@ -35,7 +37,8 @@ Template.addResponse.helpers({
     return Session.get("holdPullDownCount");
   },
   myServices: function() {
-    if (orgsSubscribe.ready()) {
+    //ServiceChangedReactiveVar.set(ServiceChangedReactiveVar.get() + 1);
+    if (Template.instance().subscriptionsReady()) {
       let workForm = Session.get("ServiceQuery");
 
      // first extract anything to do with Org:
@@ -158,7 +161,7 @@ Template.addResponse.helpers({
           }
         }
       }
-      
+      //ServiceChangedReactiveVar.set(ServiceChangedReactiveVar.get() + 1); //force form submit thru autorun
       if (_.isEmpty(orgArray)) {
         if (textCount == 0) {
           Session.set("holdPullDownCount", Services.find({}).count());
@@ -231,20 +234,82 @@ Template.addResponse.events ({
   "submit .js-service-select-query-form":function(event) {
     console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHit");
     //console.log(event);
-    var selection = event.target.select_from2.value;
-    //console.log(selection);
-    console.log(Services.findOne({_id: selection}).title);
+
+    //console.log(selection.type);
+    if (Template.instance().subscriptionsReady()) {
+      var selection = event.target.selectfrom2.value;
+      console.log(selection);
+      console.log(Services.findOne({_id: selection}).title);
+      
+      let slotStart = [];
+      Slots.find({service: selection}).forEach(function(slot){
+        slotStart.push(slot.start);
+      });
+
+      console.log(slotStart);
+      slotStart.sort();
+      console.log(slotStart);
+      slotStart.sort(function(a,b){
+        var first = moment(a);
+        var second = moment(b);
+        return first.diff(second);
+      });
+      console.log(slotStart);
+
+      console.log(moment(slotStart[0]).format('YYYY-MM-DD'));
+      console.log(moment(slotStart[slotStart.length - 1]).format('YYYY-MM-DD'));
+
+      let dateJson = {
+        format: "yyyy-mm-dd",
+        orientation: "auto",
+        daysOfWeekDisabled: "0,1,2,3",
+        autoclose: true,
+        startDate: "2014-01-24",
+        endDate: "2014-01-24",
+        datesDisabled: ['2016-04-06', '2016-04-08']
+      }
+
+      if (selection === '6eWqY5yMYDoagaa7p') {
+        dateJson['daysOfWeekDisabled'] ="0,6";
+      } else {
+        dateJson['daysOfWeekDisabled'] = "0,1,2,3";
+      };
+
+      dateJson['startDate'] = moment(slotStart[0]).format('YYYY-MM-DD');
+      dateJson['endDate'] = moment(slotStart[slotStart.length - 1]).format('YYYY-MM-DD');
+
+      $('#addResponse-datepicker .input-group.date').datepicker('remove');
+      $('#addResponse-datepicker .input-group.date').datepicker(dateJson);
+    }
     return false;// stop the form submit from reloading the page
   },
-  "change #select_from2":function(event) {
-    console.log("STTTTTTTTTTTTTTTTTTTTTTTTTTSit");
-    console.log(event);
+  "DOMSubtreeModified .select-from3":function(event) { // DOMContentLoaded does not fire
+    console.log("TTTTTmodified");
+    //console.log(event);
+    if (Session.get("holdPullDownCount") !== Session.get("OLDholdPullDownCount")) {
+      Session.set("OLDholdPullDownCount", Session.get("holdPullDownCount"));
+      Meteor.setTimeout(function(){
+        $('#testtesttest').submit();
+      },200);
+    }
+
+  },
+  "change .select-from3":function(event) {
+    console.log("TTTchange");
+   // console.log(event);
     $('#testtesttest').submit();
+
   },
   "keyup #serviceQueryText":function(event) {
 
     $('#keyByKey').submit();
-  }
+    //$('#testtesttest').submit();
+  }/*,
+  "click #testSub13":function(event) {
+
+    ServiceChangedReactiveVar.set(ServiceChangedReactiveVar.get() + 1);
+    //$('#testtesttest').submit();
+  } */
 
 
 });
@@ -263,9 +328,9 @@ Template.addResponse.onRendered(function() {
   $('#addResponse-datepicker .input-group.date').datepicker({
     format: "yyyy-mm-dd",
     orientation: "auto",
-    daysOfWeekDisabled: "0,1,2,3",
-    autoclose: true,
-    datesDisabled: ['2016-04-06', '2016-04-08']
+    //daysOfWeekDisabled: "0,1,2,3",
+    autoclose: true
+   // , datesDisabled: ['2016-04-06', '2016-04-08']
   });
   /* $('#addResponse-datepicker').on("changeDate", function() {
     $('#addResponse_hidden_input').val(
@@ -273,6 +338,31 @@ Template.addResponse.onRendered(function() {
     );
   }); */
 
+
+
 });
 
-orgsSubscribe = Meteor.subscribe('Orgs');
+Template.addResponse.onCreated(function(){
+  this.subscribe('Orgs');
+  this.subscribe('services');
+
+
+
+/*  Tracker.autorun(function () {
+
+    let x = ServiceChangedReactiveVar.get();
+   // if (Template.instance().subscriptionsReady()) {
+      $('#testtesttest').submit();
+   // }
+    console.log(x);
+
+  });
+  */
+});
+
+$(document).ready(function() {
+
+});
+
+//orgsSubscribe = Meteor.subscribe('Orgs');
+//servicesSubscribe = Meteor.subscribe('services');

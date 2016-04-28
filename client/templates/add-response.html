@@ -1,5 +1,8 @@
 <template name="addResponse">
   <div class="container-fluid">
+    <p></p>
+    <p></p>
+    <p></p>
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-9">
 
@@ -20,10 +23,10 @@
         </table></form>
 
         <form class="js-service-select-query-form" id="testtesttest"><table>
-          <tr>
+          <tr >
             <th class="input-text"><label>Service</label></th>
-            <th class="input-box">
-              <div class="form-group">
+            <th class="input-box" >
+              <div class="form-group" >
 
 
                  <!-- <ul class="dropdown-menu dropdown-menu-right"> -->
@@ -33,7 +36,7 @@
                     {{/each}}
 
                   </ul> -->
-                  <select class="form-control" id="select_from2">
+                  <select class="form-control select-from3" id="selectfrom2">
                     <!-- <option value="undefined" selected></option> -->
                     {{#each myServices}}
                       <option value={{_id}}>{{> myOrgService}}</option>
@@ -61,7 +64,7 @@
         </table>
 
         <table>
-          <tr>
+          <tr >
             <th class="input-text"><label>Slot</label></th>
             <th class="input-box">
               <div class="input-group">
@@ -81,6 +84,8 @@
       </div>
     </div>
   </div>
+
+
 </template>
 
 <template name="myOrgService">
