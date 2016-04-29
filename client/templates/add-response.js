@@ -36,6 +36,10 @@ Template.addResponse.helpers({
   pullDownCount: function(){
     return Session.get("holdPullDownCount");
   },
+  mySlots: function() {
+    return Slots.find({});
+    
+  },
   myServices: function() {
     //ServiceChangedReactiveVar.set(ServiceChangedReactiveVar.get() + 1);
     if (Template.instance().subscriptionsReady()) {
@@ -246,15 +250,29 @@ Template.addResponse.events ({
         slotStart.push(slot.start);
       });
 
-      console.log(slotStart);
+      //console.log(slotStart);
       slotStart.sort();
-      console.log(slotStart);
-      slotStart.sort(function(a,b){
-        var first = moment(a);
-        var second = moment(b);
-        return first.diff(second);
-      });
-      console.log(slotStart);
+     // console.log(slotStart);
+      slotStart.sort(function(a,b){var first = moment(a);var second = moment(b);return first.diff(second);});
+     // console.log(slotStart);
+      let slotDate = [];
+      $.each(slotStart, function(i, el){slotDate[i] = moment(el).format('YYYY-MM-DD')});
+      console.log(slotDate);
+      slotDate = uniq_fast(slotDate);
+      console.log(slotDate);
+      let notAllowedDate = [];
+      let walker = moment(slotDate[0]);
+      let endDate = moment(slotDate[slotDate.length - 1]);
+      let protRunAway = 1;
+      let i = 0;
+      while(!walker.isSame(endDate)){
+        if (walker.isSame(moment(slotDate[i]))) {i++} else{notAllowedDate.push(walker.format('YYYY-MM-DD'))};
+        walker.add(1,'d');
+
+        protRunAway++;
+        if (protRunAway > 800) {console.log('aborting while'); break;}
+      };
+      console.log(notAllowedDate);
 
       console.log(moment(slotStart[0]).format('YYYY-MM-DD'));
       console.log(moment(slotStart[slotStart.length - 1]).format('YYYY-MM-DD'));
@@ -262,24 +280,32 @@ Template.addResponse.events ({
       let dateJson = {
         format: "yyyy-mm-dd",
         orientation: "auto",
-        daysOfWeekDisabled: "0,1,2,3",
+        //daysOfWeekDisabled: "0,1,2,3",
         autoclose: true,
         startDate: "2014-01-24",
         endDate: "2014-01-24",
         datesDisabled: ['2016-04-06', '2016-04-08']
       }
 
-      if (selection === '6eWqY5yMYDoagaa7p') {
+     /* if (selection === '6eWqY5yMYDoagaa7p') {
         dateJson['daysOfWeekDisabled'] ="0,6";
       } else {
         dateJson['daysOfWeekDisabled'] = "0,1,2,3";
-      };
+      };*/
 
       dateJson['startDate'] = moment(slotStart[0]).format('YYYY-MM-DD');
       dateJson['endDate'] = moment(slotStart[slotStart.length - 1]).format('YYYY-MM-DD');
+      dateJson['datesDisabled'] = notAllowedDate;
+
+      console.log(dateJson);
 
       $('#addResponse-datepicker .input-group.date').datepicker('remove');
       $('#addResponse-datepicker .input-group.date').datepicker(dateJson);
+      $('#addResponse-datepicker .input-group.date').datepicker().on('changeDate', function(ev) {
+        console.log(moment(ev.date).format('YYYY-MM-DD'));
+        Session.set("holdServiceDate", moment(ev.date) );
+        ;
+      });
     }
     return false;// stop the form submit from reloading the page
   },
@@ -318,7 +344,7 @@ Template.addResponse.events ({
 
 Template.addResponse.onRendered(function() {
   Session.set("holdMenu", "addResponse");
-  Session.set("ServiceQuery", "black board");
+  Session.set("ServiceQuery", "");
   //Session.set("OrgQuery", "dac systems");
 
   Meteor.call("makeServiceTree");
@@ -366,3 +392,18 @@ $(document).ready(function() {
 
 //orgsSubscribe = Meteor.subscribe('Orgs');
 //servicesSubscribe = Meteor.subscribe('services');
+
+function uniq_fast(a) {
+  var seen = {};
+  var out = [];
+  var len = a.length;
+  var j = 0;
+  for(var i = 0; i < len; i++) {
+    var item = a[i];
+    if(seen[item] !== 1) {
+      seen[item] = 1;
+      out[j++] = item;
+    }
+  }
+  return out;
+}

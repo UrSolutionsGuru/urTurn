@@ -63,6 +63,24 @@
           </tr>
         </table>
 
+
+        <form class="js-slot-select-query-form" id="slotslotslot"><table>
+          <tr >
+            <th class="input-text"><label>Slot</label></th>
+            <th class="input-box" >
+              <div class="form-group" >
+               <select class="form-control select-from5" id="selectfrom4">
+                 {{#each mySlots}}
+                    <option value={{_id}}>{{> myOrgServiceSlot}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </th>
+          </tr>
+        </table></form>
+
+
+
         <table>
           <tr >
             <th class="input-text"><label>Slot</label></th>
@@ -89,12 +107,19 @@
 </template>
 
 <template name="myOrgService">
-
   <div class="checkbox">
     <label>
       <input type="checkbox" checked={{displayIt}} id={{_id}}>
       {{org}}: {{title}}
     </label>
   </div>
+</template>
 
+<template name="myOrgServiceSlot">
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" checked={{displayIt}} id={{_id}}>
+      {{title}}
+    </label>
+  </div>
 </template>
