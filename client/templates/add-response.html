@@ -56,7 +56,9 @@
             <th class="input-box">
               <div id="addResponse-datepicker">
                 <div class="input-group date">
-                  <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                  <input type="text" class="form-control" id="js-date-picker"><span class="input-group-addon">
+                  <span class="text-danger small"><small>{{slotPullDownCount}}&nbsp;</small></span>
+                  <i class="glyphicon glyphicon-th"></i></span>
                 </div>
               </div>
             </th>
@@ -81,7 +83,7 @@
 
 
 
-        <table>
+      <!--  <table>
           <tr >
             <th class="input-text"><label>Slot</label></th>
             <th class="input-box">
@@ -94,11 +96,18 @@
                     <li>9:00am</li>
                     <li>10:00am</li>
                   </ul>
-                </div><!-- /btn-group -->
-              </div><!-- /input-group -->
+                </div>
+              </div>
             </th>
           </tr>
-        </table>
+        </table> -->
+
+        <button type="button" class="btn btn-primary" id="js-ok-button">OK</button>
+        <p id="grc-one"></p>
+        <p id="grc-two"></p>
+        <p id="grc-three"></p>
+        <p id="grc-four"></p>
+
       </div>
     </div>
   </div>
@@ -119,7 +128,7 @@
   <div class="checkbox">
     <label>
       <input type="checkbox" checked={{displayIt}} id={{_id}}>
-      {{title}}
+      {{serv}}: {{start}}
     </label>
   </div>
 </template>

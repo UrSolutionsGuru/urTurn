@@ -321,6 +321,7 @@ Meteor.startup(function () {
         type: 'Slot',
         start: moment(list.start).utc().format(),
         end: moment(list.end).utc().format(),
+        theDate: moment(list.start).utc().format('YYYY-MM-DD'),
         backgroundColor: list.backgroundColor,
         borderColor: list.borderColor,
         textColor: list.textColor,

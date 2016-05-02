@@ -49,6 +49,7 @@ Meteor.methods({
           type: 'Slot',
           start: startTime.format(),
           end: endTime.format(),
+          theDate: startTime.format('YYYY-MM-DD'),
           backgroundColor: 'white',
           borderColor: 'black',
           textColor: 'grey',

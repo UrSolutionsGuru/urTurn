@@ -36,8 +36,14 @@ Template.addResponse.helpers({
   pullDownCount: function(){
     return Session.get("holdPullDownCount");
   },
+  slotPullDownCount: function(){
+    return Session.get("holdSlotPullDownCount");
+  },
   mySlots: function() {
-    return Slots.find({});
+    //Session.set("holdServiceDate", moment(ev.date) );
+    Session.set("holdSlotPullDownCount", Slots.find({service: Session.get("holdService"), theDate: Session.get("holdServiceDate")}).count());
+    return Slots.find({service: Session.get("holdService"), theDate: Session.get("holdServiceDate")});
+    return Slots.find({service: Session.get("holdService")});
     
   },
   myServices: function() {
@@ -227,6 +233,12 @@ Template.myOrgService.helpers({
   }
 });
 
+Template.myOrgServiceSlot.helpers({
+  serv: function() {
+    return Services.findOne({_id: Slots.findOne({_id: this._id}).service}).title;
+  }
+});
+
 Template.addResponse.events ({
   "submit .js-addResponse-query-form":function(event) {
     Session.set("ServiceQuery", event.target.serviceQueryText.value);
@@ -242,6 +254,7 @@ Template.addResponse.events ({
     //console.log(selection.type);
     if (Template.instance().subscriptionsReady()) {
       var selection = event.target.selectfrom2.value;
+      Session.set("holdService", selection );
       console.log(selection);
       console.log(Services.findOne({_id: selection}).title);
       
@@ -303,8 +316,8 @@ Template.addResponse.events ({
       $('#addResponse-datepicker .input-group.date').datepicker(dateJson);
       $('#addResponse-datepicker .input-group.date').datepicker().on('changeDate', function(ev) {
         console.log(moment(ev.date).format('YYYY-MM-DD'));
-        Session.set("holdServiceDate", moment(ev.date) );
-        ;
+        Session.set("holdServiceDate", moment(ev.date).format('YYYY-MM-DD') );
+        console.log(Session.get("holdServiceDate") );
       });
     }
     return false;// stop the form submit from reloading the page
@@ -330,7 +343,15 @@ Template.addResponse.events ({
 
     $('#keyByKey').submit();
     //$('#testtesttest').submit();
-  }/*,
+  },
+  "click #js-ok-button":function(event){
+    console.log($('#serviceQueryText').val());
+    $("#grc-one").text($('#serviceQueryText').val());
+    $("#grc-two").text($('#selectfrom2').val());
+    $("#grc-three").text($('#js-date-picker').val());
+    $("#grc-four").text($('#selectfrom4').val());
+  }
+  /*,
   "click #testSub13":function(event) {
 
     ServiceChangedReactiveVar.set(ServiceChangedReactiveVar.get() + 1);
