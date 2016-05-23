@@ -13,25 +13,25 @@ if (Meteor.isClient) {
     var self = this;
 
     GoogleMaps.ready('map', function(map) {
-      google.maps.event.addListener(map.instance, 'click', function (event) {
+     /* google.maps.event.addListener(map.instance, 'click', function (event) {
         Markers.insert({lat: event.latLng.lat(), lng: event.latLng.lng()});
-      });
+      }); */
 
       var markerFred;
       var latLngFred = Geolocation.latLng();
       if (MarkersReady.ready()) {
 
-        markerFred = new google.maps.Marker({
+       /* markerFred = new google.maps.Marker({
           position: new google.maps.LatLng(Markers.findOne({}).lat, Markers.findOne({}).lng),
           //position: new google.maps.LatLng(latLngFred.lat +0.005, latLngFred.lng + 0.005),
           map: map.instance
         });
         markerFred.setOpacity(0.3);
-        markerFred.setLabel('FRED');
+        markerFred.setLabel('FRED');*/
       }
 
       var marker1;
-      var marker2;
+      var markerMe;
      
       var markers = {};
 
@@ -40,7 +40,7 @@ if (Meteor.isClient) {
           var latLng = Geolocation.latLng();
           var marker = new google.maps.Marker({
             draggable: true,
-            animation: google.maps.Animation.DROP,
+           // animation: google.maps.Animation.DROP,
             position: new google.maps.LatLng(document.lat, document.lng),
            // position: new google.maps.LatLng(latLng.lat +0.002, latLng.lng + 0.002),
             map: map.instance,
@@ -51,10 +51,17 @@ if (Meteor.isClient) {
             Markers.update(marker.id, { $set: { lat: event.latLng.lat(), lng: event.latLng.lng() }});
           });
 
-          google.maps.event.addListener(marker, 'click', function(event) {
+        /*  google.maps.event.addListener(marker, 'click', function(event) {
             Markers.remove(marker.id);
-          });
+          }); */
 
+          marker.setLabel(Meteor.users.findOne({_id: document.facebook}).services.facebook.name);
+          if (document.facebook === Meteor.userId()) {
+            marker.setOpacity(1);
+          } else {
+            marker.setOpacity(0.5);
+          }
+          
           markers[document._id] = marker;
           console.log(markers[document._id].getPosition().lat());
         },
@@ -71,18 +78,32 @@ if (Meteor.isClient) {
       // Create and move the marker when latLng changes.
       self.autorun(function() {
         var latLng = Geolocation.latLng();
-        if (! latLng)
+        if (! latLng || ! userDataReady || ! MarkersReady || ! Meteor.userId())
           return;
+        
+        if(Markers.find().count() === 0){
+          console.log('Make facebook marker One');
+          Markers.insert({lat: latLng.lat, lng: latLng.lng, facebook: Meteor.userId()});
+        } else {
+          if(! Markers.findOne({facebook: Meteor.userId()})) {
+            Markers.insert({lat: latLng.lat, lng: latLng.lng, facebook: Meteor.userId()});
+            console.log('Make facebook marker Two');
+          } else {
+            Markers.update({_id: Markers.findOne({facebook: Meteor.userId()})._id}, { $set: { lat: latLng.lat, lng: latLng.lng }});
+            console.log(Meteor.users.findOne({_id: Meteor.userId()}).services.facebook.name);
+          }
 
-        if (! marker2) { //grc added
-          marker2 = new google.maps.Marker({
-            position: new google.maps.LatLng(latLng.lat +0.001, latLng.lng + 0.001),
+        }
+
+     /*   if (! markerMe) { //grc added
+          markerMe = new google.maps.Marker({
+            position: new google.maps.LatLng(latLng.lat, latLng.lng),
             map: map.instance
           });
-          marker2.setOpacity(0.5);
-          marker2.setLabel('Off');
-          console.log(marker2.getPosition().lat());
-          //marker2.setIcon({path: 'CIRCLE'});
+          markerMe.setOpacity(0.5);
+          markerMe.setLabel('Off');
+          console.log(markerMe.getPosition().lat());
+          //markerMe.setIcon({path: 'CIRCLE'});
         }
 
         // If the marker doesn't yet exist, create it.
@@ -95,13 +116,13 @@ if (Meteor.isClient) {
         }
         // The marker already exists, so we'll just change its position.
         else {
-          // marker.setPosition(latLng);
-          marker1.setPosition({lat: Lng.lat + 0.0001, lng: latLng.lng + 0.0001});
+           marker1.setPosition(latLng);
+          //marker1.setPosition({lat: latLng.lat + 0.0001, lng: latLng.lng + 0.0001});
         }
 
         // Center and zoom the map view onto the current position.
         map.instance.setCenter(marker1.getPosition());
-        map.instance.setZoom(MAP_ZOOM);
+        map.instance.setZoom(MAP_ZOOM); */
       });
     });
   });
@@ -129,4 +150,5 @@ Template.mapMain.onRendered(function() {
 
 Template.mapMain.onCreated(function() {
   MarkersReady = this.subscribe('Markers');
+  userDataReady = this.subscribe('userData');
 });

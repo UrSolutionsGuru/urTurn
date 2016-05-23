@@ -14,8 +14,11 @@ Template.admin.events({
   'click .js-addSlots': function () {
     Meteor.call("addMoreSLots");
     //addSlots();
+  },
+  'click .js-removeMarkers': function () {
+    Meteor.call("removeMarkers");
+    
   }
-
 });
 
 Template.admin.onRendered(function() {

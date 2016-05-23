@@ -10,6 +10,10 @@ Meteor.methods({
     Subs.remove({});
     Orgs.remove({});
   },
+  removeMarkers: function () {
+    Markers.remove({});
+    
+  },
   sendEmail: function (to, from, subject, text) {
    //? check([to, from, subject, text], [String]);
 
