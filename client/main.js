@@ -59,6 +59,18 @@ Template.body.helpers({
     } else {return "";};
 
   },
+  menuAddResponse: function() {
+    if (Session.get("holdMenu") == 'addResponse'){
+      return "active";
+    } else {return "";};
+
+  },
+  menuMap: function() {
+    if (Session.get("holdMenu") == 'map'){
+      return "active";
+    } else {return "";};
+
+  },
   treeArgs: {
     collection: TreeData,
     subscription: 'TreeData',

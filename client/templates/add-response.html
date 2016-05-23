@@ -1,11 +1,15 @@
 <template name="addResponse">
   <div class="container-fluid">
-    <p></p>
-    <p></p>
+
+    <h1>Add Response</h1>
     <p></p>
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-9">
-
+        <p>{{#if Template.subscriptionsReady}}
+          Good Morning!
+        {{else}}
+          Loading...
+        {{/if}} What would you like to do today:</p>
         <form class="js-addResponse-query-form" id="keyByKey"><table>
           <tr>
             <th class="input-text"><label>Query</label></th>

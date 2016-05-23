@@ -90,3 +90,7 @@ Meteor.publish('ServiceTree', function() {
 Meteor.publish('Orgs', function() {
   return Orgs.find();
 });
+
+Meteor.publish('Markers', function() {
+  return Markers.find();
+});
