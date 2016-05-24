@@ -77,23 +77,7 @@ if (Meteor.isClient) {
 
       // Create and move the marker when latLng changes.
       self.autorun(function() {
-        var latLng = Geolocation.latLng();
-        if (! latLng || ! userDataReady || ! MarkersReady || ! Meteor.userId())
-          return;
-        
-        if(Markers.find().count() === 0){
-          console.log('Make facebook marker One');
-          Markers.insert({lat: latLng.lat, lng: latLng.lng, facebook: Meteor.userId()});
-        } else {
-          if(! Markers.findOne({facebook: Meteor.userId()})) {
-            Markers.insert({lat: latLng.lat, lng: latLng.lng, facebook: Meteor.userId()});
-            console.log('Make facebook marker Two');
-          } else {
-            Markers.update({_id: Markers.findOne({facebook: Meteor.userId()})._id}, { $set: { lat: latLng.lat, lng: latLng.lng }});
-            console.log(Meteor.users.findOne({_id: Meteor.userId()}).services.facebook.name);
-          }
 
-        }
 
      /*   if (! markerMe) { //grc added
           markerMe = new google.maps.Marker({
@@ -143,6 +127,40 @@ if (Meteor.isClient) {
       }
     }
   });
+
+  Meteor.setInterval(function(){
+    var latLng = Geolocation.latLng();
+    if (! latLng || ! userDataReady || ! MarkersReady || ! Meteor.userId())
+      return;
+
+    if(Markers.find().count() === 0){
+
+      if (Markers.findOne({facebook: Meteor.userId()})){
+        console.log('PROTECTED IT --- AS WAS FIRST');
+      } else {
+        Markers.insert({lat: latLng.lat, lng: latLng.lng, facebook: Meteor.userId(), ipAddr: Meteor.user().status.lastLogin.ipAddr});
+        console.log('INSERETED A NEW ONE AS WAS FIRST');
+      }
+
+    } else {
+      if(Markers.findOne({facebook: Meteor.userId(), ipAddr: Meteor.user().status.lastLogin.ipAddr})) {
+        Markers.update({_id: Markers.findOne({facebook: Meteor.userId(), ipAddr: Meteor.user().status.lastLogin.ipAddr})._id},
+          { $set: { lat: latLng.lat, lng: latLng.lng }});
+        console.log(Meteor.users.findOne({_id: Meteor.userId()}).services.facebook.name);
+      } else {
+        if (Markers.findOne({facebook: Meteor.userId(), ipAddr: Meteor.user().status.lastLogin.ipAddr})){
+          console.log('PROTECTED IT');
+        } else {
+          Markers.insert({lat: latLng.lat, lng: latLng.lng, facebook: Meteor.userId(), ipAddr: Meteor.user().status.lastLogin.ipAddr});
+          console.log('INSERTED A NEW ONE !!!!!!!!!!!!!!!!!!!!!!');
+        }
+
+      }
+
+    }
+
+    
+  },5000);
 }
 Template.mapMain.onRendered(function() {
   Session.set("holdMenu", "map");
