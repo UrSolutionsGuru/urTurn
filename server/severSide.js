@@ -16,5 +16,11 @@ Meteor.setInterval(function(){
         Markers.remove({_id: marker._id});
       });
     }
+
+
+
   });
+  
+
 },5000);
+
