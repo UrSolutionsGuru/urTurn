@@ -2,25 +2,6 @@
  * Created by GaryC on 2016/05/25.
  */
 
-/*console.log(UserStatus.connections._collection.name);
-console.log(UserStatus);
-UserStatus.connections.find({}).forEach(function(connect){
-  console.log(connect);
-});
-
-console.log('Anon: ' + UserStatus.connections.find({userId: {$exists: false}}).count());
-console.log('Named: ' + UserStatus.connections.find({userId: {$exists: true}}).count());
-
-var fred = {
-  month: moment().format('MMYYYY'),
-  facebook: null,
-  count: 0,
-  lastIpAddr: UserStatus.connections.findOne({}).ipAddr,
-
-
-} */
-//Hits.remove({});
-
 UserStatus.events.on("connectionLogin", function(fields) { 
   if (Hits.findOne({month: moment().format('MMYYYY'), facebook: fields.userId})){
     //console.log ('update Hit');
@@ -48,8 +29,7 @@ UserStatus.events.on("connectionLogin", function(fields) {
       name: 'Anon',
     });
   }
-  //console.log('Anon: ' + UserStatus.connections.find({userId: {$exists: false}}).count()
-  //+ ' Named: ' + UserStatus.connections.find({userId: {$exists: true}}).count());
+  
 });
 
 UserStatus.connections.find({userId: {$exists: false}}).observe({
@@ -68,11 +48,10 @@ UserStatus.connections.find({userId: {$exists: false}}).observe({
         name: 'Anon',
       });
     }
+    OnLine.update({}, {$set: {count: UserStatus.connections.find({}).count()}});
   },
-  /* removed: function (oldDocument) {
-    console.log('anon removed');
+  removed: function (oldDocument) {
+    OnLine.update({}, {$set: {count: UserStatus.connections.find({}).count()}});
   },
-  changed: function (newDocument, oldDocument) {
-    console.log('anon changed');
-  }, */
+  
 });

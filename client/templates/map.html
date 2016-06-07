@@ -1,6 +1,15 @@
 <template name="mapMain">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12" style="padding-top: 50px; padding-right: 50px; padding-bottom: 5px;">
+        <p class="text-right" style="font-family: 'Hind Vadodara', sans-serif; font-weight: 500; font-size: 14px; Color: black">
+          <span>Total Visits  -  {{displayHits}}   |   Current Visitors  -  {{displayVistors}}</span>
+        </p>
+      </div>
+    </div>
 
   {{> map}}
+  </div>
 </template>
 
 <template name="map">

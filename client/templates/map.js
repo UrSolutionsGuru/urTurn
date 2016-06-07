@@ -125,7 +125,7 @@ if (Meteor.isClient) {
         }
 
         // Center and zoom the map view onto the current position.
-        map.instance.setCenter(marker1.getPosition());
+          map.instance.setCenter(marker1.getPosition());
         map.instance.setZoom(MAP_ZOOM); */
       });
     });
@@ -146,6 +146,19 @@ if (Meteor.isClient) {
         };
       }
     }
+  });
+
+  Template.mapMain.helpers({
+    displayHits () {
+      var count = 0;
+      Hits.find().forEach(function (hit) {
+        count = count + hit.count;
+      });
+      return count;
+    },
+    displayVistors () {
+      return OnLine.findOne({}).count;
+    },
   });
 
   Meteor.setInterval(function(){
@@ -203,4 +216,6 @@ Template.mapMain.onRendered(function() {
 Template.mapMain.onCreated(function() {
   MarkersReady = this.subscribe('Markers');
   userDataReady = this.subscribe('userData');
+  this.subscribe('Hits');
+  this.subscribe('OnLine');
 });

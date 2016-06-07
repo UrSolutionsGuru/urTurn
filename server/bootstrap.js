@@ -2,6 +2,9 @@
  * Created by GaryC on 2016/03/08.
  */
 Meteor.startup(function () {
+  if (OnLine.find().count() === 0) {
+    OnLine.insert({count: 0});
+  };
   if (Urturns.find().count() === 0) {
     var data = [
     {
