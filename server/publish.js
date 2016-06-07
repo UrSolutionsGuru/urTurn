@@ -94,3 +94,11 @@ Meteor.publish('Orgs', function() {
 Meteor.publish('Markers', function() {
   return Markers.find();
 });
+
+Meteor.publish('Hits', function() {
+  return Hits.find();
+});
+
+Meteor.publish('OnLine', function() {
+  return OnLine.find();
+});
