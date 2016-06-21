@@ -2,7 +2,7 @@
  * Created by GaryC on 2016/04/07.
  */
 
-
+//var graph = require('fbgraph');
 
 /* Template.oneMine.helpers({
   treeArgs: {
@@ -82,3 +82,41 @@ Template.oneMine.onRendered(function() {
 Template.oneOpen.onRendered(function() {
   Session.set("holdMenu", "one");
 });
+
+
+
+Template.oneMine.events({
+    "click .js-facebook"() {
+   /*   graph.setAccessToken(
+      "EAAPK9Np9Hn0BAFQT0lELujJTqPuqHZAYP0nwKhCfj4z5WIsZCIzJUkI7GyB2LUDprJncSqzcxCQiNuijGJzQwCDJIsVm64B4DfT9W3OxnUccAMWZBQgg74WRFZAogBFWlcU6soAksW4p6PDJACz6i0hfiTnfGlgZD"
+      );
+      console.log('facebook clicked');
+      var options = {
+        timeout: 3000
+        , pool: {maxSockets: Infinity}
+        , headers: {connection: "keep-alive"}
+      };
+
+      graph
+        .setOptions(options)
+        .get("zuck", function (err, res) {
+          console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
+        }); */
+
+
+
+    },
+  'click #btn-user-data': function(e) {
+    Meteor.call('getUserData', function(err, data) {
+      $('#result').text(JSON.stringify(data, undefined, 4));
+    });
+  },
+  'click #btn-user-data2': function(e) {
+    Meteor.call('getFriendsData', function(err, data) {
+      console.log(data.picture.data.url);
+      $('#result2').text(JSON.stringify(data, undefined, 4));
+      $('#result3').attr("src", data.picture.data.url);
+    });
+  },
+});
+

@@ -52,9 +52,18 @@
       </tr>
     </table>
 
+
 </div>
 
 <p style="float: none;">fred face</p>
+
+    {{> avatar userId="zCWcP8DPe6dqQ2t6E" shape="circle"}}
+    {{> avatar userId="csDBRp7CZK9St486r" shape="circle"}}
+    {{> avatar userId="J9Rm2KWthurcr7fHE" shape="circle"}}
+
+    <button class="js-facebook">facebook</button>
+
+    {{> home5}}
 
   </div>
 </template>
@@ -67,10 +76,26 @@
         <div class="panel panel-default">
 
           <div class="panel-body">
+            {{> home5}}
             <span>One open</span>
+            {{> avatar userId="zCWcP8DPe6dqQ2t6E" shape="circle"}}
+            {{> avatar userId="csDBRp7CZK9St486r" shape="circle"}}
+            {{> avatar userId="J9Rm2KWthurcr7fHE" shape="circle"}}
           </div>
         </div>
       </div>
     </div>
   </div>
+</template>
+
+<template name="home5">
+  <button class="btn" id="btn-user-data">Get User Data</button>
+  <div class="well">
+    <pre id="result"></pre>
+  </div>
+  <button class="btn" id="btn-user-data2">Get Friend Data</button>
+  <div class="well">
+    <pre id="result2"></pre>
+  </div>
+  <img id="result3"  alt="avatar" style="border-radius: 50%;" onerror="this.style.display='none';" />
 </template>

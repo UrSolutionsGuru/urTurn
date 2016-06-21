@@ -2,6 +2,14 @@
  * Created by GaryC on 2016/03/16.
  */
 
+Accounts.ui.config({
+  requestPermissions: {
+    facebook: ['email', 'user_friends'],
+  }
+ });
+
+
+
 Template.body.helpers({
   admin: function() {
     if (Meteor.user().profile.name === 'Gary Carter'){ //set to garyc for now

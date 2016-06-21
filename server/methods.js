@@ -1,7 +1,57 @@
 /**
  * Created by GaryC on 2016/03/12.
  */
+function Facebook(accessToken) {
+ // this.fb = Meteor.require('fbgraph');
+  this.fb = require('fbgraph');
+  this.accessToken = accessToken;
+  this.fb.setAccessToken(this.accessToken);
+  this.fb.setVersion("2.6");
+  this.options = {
+    timeout: 3000,
+    pool: {maxSockets: Infinity},
+    headers: {connection: "keep-alive"}
+  }
+  this.fb.setOptions(this.options);
+};
+Facebook.prototype.query = function(query, method) {
+  var self = this;
+  var method = (typeof method === 'undefined') ? 'get' : method;
+  var data = Async.runSync(function(done) {
+    self.fb[method](query, function(err, res) {
+      done(null, res);
+    });
+  });
+  return data.result;
+};
+Facebook.prototype.getUserData = function() {
+  return this.query('me');
+};
+Facebook.prototype.getFriendsData = function() {
+  return this.query('/me?fields=picture');
+};
+
+
+
+
 Meteor.methods({
+  getUserData: function() {
+   // var fb = new Facebook(Meteor.user().services.facebook.accessToken);
+  //  var fb = new Facebook("EAAPK9Np9Hn0BAFQT0lELujJTqPuqHZAYP0nwKhCfj4z5WIsZCIzJUkI7GyB2LUDprJncSqzcxCQiNuijGJzQwCDJIsVm64B4DfT9W3OxnUccAMWZBQgg74WRFZAogBFWlcU6soAksW4p6PDJACz6i0hfiTnfGlgZD"
+   // );
+    var fb = new Facebook("EAAPK9Np9Hn0BABrUfWQiWUKM6rt2ofiBzPzeAc9FLn4ZB1fFaPZBrtQArZAbBZC0Nxd4zJ8Ui9AwUmAnTM8iIMtqOYU4bqXUCueEfvqKxCgX0zEliLYBV1TDifiZCpZCn6QLrsz8IBeqmMOZBQsPebu3zcRWh4cnScZD" );
+    var data = fb.getUserData();
+    return data;
+  },
+  getFriendsData: function() {
+    //var fb = new Facebook(Meteor.user().services.facebook.accessToken);
+    var fb = new Facebook("EAAPK9Np9Hn0BABrUfWQiWUKM6rt2ofiBzPzeAc9FLn4ZB1fFaPZBrtQArZAbBZC0Nxd4zJ8Ui9AwUmAnTM8iIMtqOYU4bqXUCueEfvqKxCgX0zEliLYBV1TDifiZCpZCn6QLrsz8IBeqmMOZBQsPebu3zcRWh4cnScZD" );
+
+    var data = fb.getFriendsData();
+    return data;
+  },
+
+
   removeSlotsUrturns: function () {
     Slots.remove({});
     Urturns.remove({});

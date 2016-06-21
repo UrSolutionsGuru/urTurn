@@ -33,3 +33,5 @@ reactive-var
 dburles:google-maps
 mdg:geolocation
 mizzao:user-status
+utilities:avatar
+meteorhacks:async
